@@ -54,7 +54,7 @@ public class RepositorioArtist extends SQLiteOpenHelper {
 
     public ArtistDetails get(String nombre) {
         String consultaSQL = "SELECT * FROM " + tablaArtista.TABLE_NAME +
-                " WHERE " + tablaArtista.COL_NOMBRE + "=" + "\"" + nombre + "\"";
+                " WHERE " + tablaArtista.COL_NOMBRE + " LIKE " + "\"" + nombre + "\"";
 
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(consultaSQL, null);

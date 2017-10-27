@@ -1,6 +1,5 @@
 package fem.miw.upm.es.buscamusic;
 
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -17,11 +16,10 @@ import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
-import java.util.List;
-
 import fem.miw.upm.es.buscamusic.modelsAlbum.Album;
+import fem.miw.upm.es.buscamusic.modelsAlbum.AlbumDetails;
+import fem.miw.upm.es.buscamusic.modelsAlbum.RepositorioAlbum;
 import fem.miw.upm.es.buscamusic.modelsArtist.Artist;
-import fem.miw.upm.es.buscamusic.modelsArtist.ArtistContract;
 import fem.miw.upm.es.buscamusic.modelsArtist.ArtistDetails;
 import fem.miw.upm.es.buscamusic.modelsArtist.RepositorioArtist;
 import fem.miw.upm.es.buscamusic.modelsTags.Tag;
@@ -50,7 +48,8 @@ public class MainActivity extends AppCompatActivity {
     private RadioButton rb_topTracks;
     private RadioButton rb_tags;
 
-    private RepositorioArtist db_artis;
+    private RepositorioArtist db_artist;
+    private RepositorioAlbum db_albums;
 
 
     private static final String METODO_INFOARTISTA = "artist.getinfo";
@@ -140,9 +139,9 @@ public class MainActivity extends AppCompatActivity {
 
     private void buscarInfoArtist(String artist) {
 
-        db_artis = new RepositorioArtist(getApplicationContext());
+        db_artist = new RepositorioArtist(getApplicationContext());
 
-        ArtistDetails artistAux = db_artis.get(artist);
+        ArtistDetails artistAux = db_artist.get(artist);
         if (artistAux != null) {
             mostrar_text.setText("YA ESTA EN BBDD" + artistAux.getNombre() + artistAux.getImagen());
         } else {
@@ -188,16 +187,31 @@ public class MainActivity extends AppCompatActivity {
 
     private void addArtistToBBDD(ArtistDetails artist) {
 
-        db_artis = new RepositorioArtist(getApplicationContext());
+        db_artist = new RepositorioArtist(getApplicationContext());
 
-        long id = db_artis.add(artist.getName(), artist.getImage().get(3).getText(),
+        long id = db_artist.add(artist.getName(), artist.getImage().get(3).getText(),
                 artist.getBioArtist().getSummary(), artist.getBioArtist().getContent());
 
         Log.i(LOG_TAG, "Artista añadido: " + id);
 
     }
 
-    public void buscarInfoAlbum(String artist, String album) {
+    // ALBUMMMMMMMM
+
+    private void buscarInfoAlbum(String artist, String album) {
+
+        db_albums = new RepositorioAlbum(getApplicationContext());
+
+        AlbumDetails albumAux = db_albums.get(artist, album);
+        if (albumAux != null) {
+            mostrar_text.setText("YA ESTA EN BBDD" + albumAux.getNombre() + albumAux.getImagen() + albumAux.getArtista());
+        } else {
+            infoAlbumAPI(artist, album);
+        }
+
+    }
+
+    public void infoAlbumAPI(String artist, final String album) {
 
         Call<Album> call_async = lastfmApiService.getAlbum(METODO_INFOALBUM, artist, album, API_KEY, API_FORMAT, API_LENGUAJE);
 
@@ -211,6 +225,8 @@ public class MainActivity extends AppCompatActivity {
                     Picasso.with(getApplicationContext()).
                             load(respuestaAlbum.getAlbum().getImage().get(3).getText())
                             .into(mostrar_img);
+
+                    addAlbumToBBDD(respuestaAlbum.getAlbum());
 
                     Log.i(LOG_TAG, "Respuesta artista: " + respuestaAlbum.toString());
                 } else {
@@ -230,6 +246,20 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+    private void addAlbumToBBDD(AlbumDetails album) {
+
+        db_albums = new RepositorioAlbum(getApplicationContext());
+
+        long id = db_albums.add(album.getName(), buscar_infoArtista.getText().toString(), album.getImage().get(3).getText(), album.getTracks().getTrack().toString(),
+                album.getTracks().getTrack().toString());
+
+        Log.i(LOG_TAG, "Album añadido: " + id);
+
+    }
+
+
+    // TOP TRACKSSSS
 
     public void buscarTopTracks() {
 

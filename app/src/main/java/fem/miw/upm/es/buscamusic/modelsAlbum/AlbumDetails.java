@@ -6,6 +6,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import fem.miw.upm.es.buscamusic.Image;
+import fem.miw.upm.es.buscamusic.modelsTopTracks.Tracks;
 
 public class AlbumDetails {
 
@@ -18,6 +19,66 @@ public class AlbumDetails {
     @SerializedName("tracks")
     @Expose
     private Tracks tracks;
+
+    private int id;
+    private String nombre;
+    private String artista;
+    private String imagen;
+    private String listTracks;
+    private String duracionTracks;
+
+    public AlbumDetails(int id, String nombre, String artista, String imagen, String listTracks, String duracionTracks) {
+        this.id = id;
+        this.nombre = nombre;
+        this.artista = artista;
+        this.imagen = imagen;
+        this.listTracks = listTracks;
+        this.duracionTracks = duracionTracks;
+    }
+
+    public int getId (){
+        return id;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getArtista() {
+        return artista;
+    }
+
+    public void setArtista(String artista) {
+        this.artista = artista;
+    }
+
+    public String getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
+    }
+
+    public String getListTracks() {
+        return listTracks;
+    }
+
+    public void setListTracks(String listTracks) {
+        this.listTracks = listTracks;
+    }
+
+    public String getDuracionTracks() {
+        return duracionTracks;
+    }
+
+    public void setDuracionTracks(String duracionTracks) {
+        this.duracionTracks = duracionTracks;
+    }
 
     public String getName() {
         return name;
