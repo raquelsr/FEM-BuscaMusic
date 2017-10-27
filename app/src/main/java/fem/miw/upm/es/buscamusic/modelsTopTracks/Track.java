@@ -5,6 +5,9 @@ import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import fem.miw.upm.es.buscamusic.Image;
+import fem.miw.upm.es.buscamusic.modelsArtist.ArtistDetails;
+
 public class Track {
 
     @SerializedName("name")
@@ -13,21 +16,12 @@ public class Track {
     @SerializedName("duration")
     @Expose
     private String duration;
-    @SerializedName("listeners")
-    @Expose
-    private String listeners;
-    @SerializedName("mbid")
-    @Expose
-    private String mbid;
-    @SerializedName("url")
-    @Expose
-    private String url;
     @SerializedName("artist")
     @Expose
-    private Artist artist;
+    private ArtistDetails artist;
     @SerializedName("image")
     @Expose
-    private Image image;
+    private List<Image> image = null;
 
     public String getName() {
         return name;
@@ -45,36 +39,12 @@ public class Track {
         this.duration = duration;
     }
 
-    public String getListeners() {
-        return listeners;
+    public List<Image> getImage() {
+        return image;
     }
 
-    public void setListeners(String listeners) {
-        this.listeners = listeners;
-    }
-
-    public String getMbid() {
-        return mbid;
-    }
-
-    public void setMbid(String mbid) {
-        this.mbid = mbid;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
-    public Artist getArtist() {
-        return artist;
-    }
-
-    public void setArtist(Artist artist) {
-        this.artist = artist;
+    public void setImage(List<Image> image) {
+        this.image = image;
     }
 
     @Override
@@ -82,11 +52,8 @@ public class Track {
         return "Track{" +
                 "name='" + name + '\'' +
                 ", duration='" + duration + '\'' +
-                ", listeners='" + listeners + '\'' +
-                ", mbid='" + mbid + '\'' +
-                ", url='" + url + '\'' +
                 ", artist=" + artist +
+                ", image=" + image +
                 '}';
     }
-
 }

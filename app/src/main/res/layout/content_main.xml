@@ -36,6 +36,12 @@
                 android:layout_height="wrap_content"
                 android:text="Top Tracks"
                 android:id="@+id/rb_toptracks"/>
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tag"
+                android:id="@+id/rb_tags"/>
         </RadioGroup>
     </LinearLayout>
 

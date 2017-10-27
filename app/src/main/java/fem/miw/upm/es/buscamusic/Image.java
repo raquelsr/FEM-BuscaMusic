@@ -1,5 +1,5 @@
 
-package fem.miw.upm.es.buscamusic.modelsArtist;
+package fem.miw.upm.es.buscamusic;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

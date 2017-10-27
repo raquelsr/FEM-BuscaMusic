@@ -4,7 +4,7 @@ package fem.miw.upm.es.buscamusic.modelsArtist;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Tag {
+public class Tag_Artist {
 
     @SerializedName("name")
     @Expose
@@ -31,7 +31,7 @@ public class Tag {
 
     @Override
     public String toString() {
-        return "Tag{" +
+        return "Tag_Artist{" +
                 "name='" + name + '\'' +
                 ", url='" + url + '\'' +
                 '}';

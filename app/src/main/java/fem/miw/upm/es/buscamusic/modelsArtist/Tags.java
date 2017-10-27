@@ -7,22 +7,22 @@ import com.google.gson.annotations.SerializedName;
 
 public class Tags {
 
-    @SerializedName("tag")
+    @SerializedName("tagArtist")
     @Expose
-    private List<Tag> tag = null;
+    private List<Tag_Artist> tagArtist = null;
 
-    public List<Tag> getTag() {
-        return tag;
+    public List<Tag_Artist> getTagArtist() {
+        return tagArtist;
     }
 
-    public void setTag(List<Tag> tag) {
-        this.tag = tag;
+    public void setTagArtist(List<Tag_Artist> tagArtist) {
+        this.tagArtist = tagArtist;
     }
 
     @Override
     public String toString() {
         return "Tags{" +
-                "tag=" + tag +
+                "tagArtist=" + tagArtist +
                 '}';
     }
 }

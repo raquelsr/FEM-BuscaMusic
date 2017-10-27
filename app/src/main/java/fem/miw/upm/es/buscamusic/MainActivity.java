@@ -21,6 +21,7 @@ import java.util.List;
 
 import fem.miw.upm.es.buscamusic.modelsAlbum.Album;
 import fem.miw.upm.es.buscamusic.modelsArtist.Artist;
+import fem.miw.upm.es.buscamusic.modelsTags.Tag;
 import fem.miw.upm.es.buscamusic.modelsTopTracks.TopTracks;
 import fem.miw.upm.es.buscamusic.modelsTopTracks.Tracks;
 import retrofit2.Call;
@@ -45,11 +46,13 @@ public class MainActivity extends AppCompatActivity {
     private RadioButton rb_artista;
     private RadioButton rb_album;
     private RadioButton rb_topTracks;
+    private RadioButton rb_tags;
 
 
     private static final String METODO_INFOARTISTA = "artist.getinfo";
     private static final String METODO_INFOALBUM = "album.getinfo";
-    private static final String METODO_INFOTOPTRACKS = "geo.gettoptracks";
+    private static final String METODO_TOPTRACKS = "chart.gettoptracks";
+    private static final String METODO_TAGS = "tag.gettopartists";
 
     private LastFMAPIService lastfmApiService;
 
@@ -77,6 +80,7 @@ public class MainActivity extends AppCompatActivity {
         rb_artista = (RadioButton) findViewById(R.id.rb_artista);
         rb_album = (RadioButton) findViewById(R.id.rb_album);
         rb_topTracks = (RadioButton) findViewById(R.id.rb_toptracks);
+        rb_tags = (RadioButton) findViewById(R.id.rb_tags);
 
         if (rb_artista.isChecked()){
             buscar_infoAlbum.setVisibility(View.INVISIBLE);
@@ -124,7 +128,9 @@ public class MainActivity extends AppCompatActivity {
         } else if (rb_album.isChecked()){
             buscarInfoAlbum(artist, album);
         } else if (rb_topTracks.isChecked()){
-            buscarTopTracks(artist);
+            buscarTopTracks();
+        } else if (rb_tags.isChecked()){
+            buscarTopArtistPorTags(artist);
         }
     }
 
@@ -196,9 +202,9 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public void buscarTopTracks (String country){
+    public void buscarTopTracks (){
 
-        Call<TopTracks> call_async = lastfmApiService.getTopTracks(METODO_INFOTOPTRACKS, country, API_KEY, API_FORMAT, API_LENGUAJE);
+        Call<TopTracks> call_async = lastfmApiService.getTopTracks(METODO_TOPTRACKS, API_KEY, API_FORMAT, API_LENGUAJE);
 
         call_async.enqueue(new Callback<TopTracks>() {
             @Override
@@ -225,6 +231,40 @@ public class MainActivity extends AppCompatActivity {
                 ).show();
                 Log.e(LOG_TAG, t.getMessage());
                 Log.e(LOG_TAG, "ERROR POR QUI");
+            }
+        });
+    }
+
+    private void buscarTopArtistPorTags(String tag) {
+
+        Call<Tag> call_async = lastfmApiService.getTracks(METODO_TAGS, tag, API_KEY, API_FORMAT, API_LENGUAJE);
+
+        call_async.enqueue(new Callback<Tag>() {
+            @Override
+            public void onResponse(Call<Tag> call, Response<Tag> response) {
+                Log.i(LOG_TAG, "RESPONSE "+ response.toString());
+                Tag respuestaTags = response.body();
+                if(respuestaTags!=null){
+                    mostrar_text.setText(respuestaTags.getTopartists().toString());
+                    /*Picasso.with(getApplicationContext()).
+                            load(respuestaArtista.getArtist().getImage().get(3).getText())
+                            .into(mostrar_img);*/
+
+                    Log.i(LOG_TAG, "Respuesta artista: " + respuestaTags.toString());
+                } else {
+                    mostrar_text.setText("No hay artista");
+                    Log.i(LOG_TAG, "No se ha recuperado el artista");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Tag> call, Throwable t) {
+                Toast.makeText(
+                        getApplicationContext(),
+                        "ERROR: " + t.getMessage(),
+                        Toast.LENGTH_LONG
+                ).show();
+                Log.e(LOG_TAG, t.getMessage());
             }
         });
     }
