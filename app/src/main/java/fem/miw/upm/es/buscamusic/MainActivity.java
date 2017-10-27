@@ -16,6 +16,8 @@ import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
+import java.util.List;
+
 import fem.miw.upm.es.buscamusic.modelsAlbum.Album;
 import fem.miw.upm.es.buscamusic.modelsAlbum.AlbumDetails;
 import fem.miw.upm.es.buscamusic.modelsAlbum.RepositorioAlbum;
@@ -23,7 +25,9 @@ import fem.miw.upm.es.buscamusic.modelsArtist.Artist;
 import fem.miw.upm.es.buscamusic.modelsArtist.ArtistDetails;
 import fem.miw.upm.es.buscamusic.modelsArtist.RepositorioArtist;
 import fem.miw.upm.es.buscamusic.modelsTags.Tag;
+import fem.miw.upm.es.buscamusic.modelsTopTracks.RepositorioTopTracks;
 import fem.miw.upm.es.buscamusic.modelsTopTracks.TopTracks;
+import fem.miw.upm.es.buscamusic.modelsTopTracks.Track;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -50,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
 
     private RepositorioArtist db_artist;
     private RepositorioAlbum db_albums;
+    private RepositorioTopTracks db_TopTracks;
 
 
     private static final String METODO_INFOARTISTA = "artist.getinfo";
@@ -131,9 +136,9 @@ public class MainActivity extends AppCompatActivity {
         } else if (rb_album.isChecked()) {
             buscarInfoAlbum(artist, album);
         } else if (rb_topTracks.isChecked()) {
-            buscarTopTracks();
+            buscarTopTracks(artist);
         } else if (rb_tags.isChecked()) {
-            buscarTopArtistPorTags(artist);
+          //  buscarTopArtistPorTags(artist);
         }
     }
 
@@ -261,7 +266,20 @@ public class MainActivity extends AppCompatActivity {
 
     // TOP TRACKSSSS
 
-    public void buscarTopTracks() {
+    private void buscarTopTracks (String limit) {
+
+        db_TopTracks = new RepositorioTopTracks(getApplicationContext());
+
+        List<Track> listTracks = db_TopTracks.getAll(limit);
+        if (!listTracks.isEmpty()) {
+            mostrar_text.setText("YA ESTA EN BBDD" + listTracks.size() + listTracks.toString());
+        } else {
+            infoTopTrackAPI();
+        }
+
+    }
+
+    public void infoTopTrackAPI() {
 
         Call<TopTracks> call_async = lastfmApiService.getTopTracks(METODO_TOPTRACKS, API_KEY, API_FORMAT, API_LENGUAJE);
 
@@ -274,6 +292,7 @@ public class MainActivity extends AppCompatActivity {
                 if (respuestaTopTracks != null) {
                     mostrar_text.setText(respuestaTopTracks.toString() + "\n");
 
+                    addTracksToBBDD(respuestaTopTracks.getTracks().getTrack());
                     Log.i(LOG_TAG, "Respuesta artista: " + respuestaTopTracks.toString());
                 } else {
                     mostrar_text.setText("No hay artista");
@@ -294,38 +313,16 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void buscarTopArtistPorTags(String tag) {
+    private void addTracksToBBDD(List<Track> tracks) {
 
-        Call<Tag> call_async = lastfmApiService.getTracks(METODO_TAGS, tag, API_KEY, API_FORMAT, API_LENGUAJE);
+        db_TopTracks = new RepositorioTopTracks(getApplicationContext());
 
-        call_async.enqueue(new Callback<Tag>() {
-            @Override
-            public void onResponse(Call<Tag> call, Response<Tag> response) {
-                Log.i(LOG_TAG, "RESPONSE " + response.toString());
-                Tag respuestaTags = response.body();
-                if (respuestaTags != null) {
-                    mostrar_text.setText(respuestaTags.getTopartists().toString());
-                    /*Picasso.with(getApplicationContext()).
-                            load(respuestaArtista.getArtist().getImage().get(3).getText())
-                            .into(mostrar_img);*/
+        for (Track t: tracks){
+            db_TopTracks.add(t.getName(), t.getImagen(), t.getArtista());
+        }
 
-                    Log.i(LOG_TAG, "Respuesta artista: " + respuestaTags.toString());
-                } else {
-                    mostrar_text.setText("No hay artista");
-                    Log.i(LOG_TAG, "No se ha recuperado el artista");
-                }
-            }
+        Log.i(LOG_TAG, "TopTracks añadidos ");
 
-            @Override
-            public void onFailure(Call<Tag> call, Throwable t) {
-                Toast.makeText(
-                        getApplicationContext(),
-                        "ERROR: " + t.getMessage(),
-                        Toast.LENGTH_LONG
-                ).show();
-                Log.e(LOG_TAG, t.getMessage());
-            }
-        });
     }
 
 }

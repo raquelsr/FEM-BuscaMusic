@@ -13,9 +13,6 @@ public class Track {
     @SerializedName("name")
     @Expose
     private String name;
-    @SerializedName("duration")
-    @Expose
-    private String duration;
     @SerializedName("artist")
     @Expose
     private ArtistDetails artist;
@@ -23,20 +20,56 @@ public class Track {
     @Expose
     private List<Image> image = null;
 
+    private int id;
+    private String nombre;
+    private String imagen;
+    private String artista;
+
+    public Track(int id, String nombre, String imagen, String artista) {
+        this.id = id;
+        this.nombre = nombre;
+        this.imagen = imagen;
+        this.artista = artista;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
+    }
+
+    public String getArtista() {
+        return artista;
+    }
+
+    public void setArtista(String artista) {
+        this.artista = artista;
+    }
+
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getDuration() {
-        return duration;
-    }
-
-    public void setDuration(String duration) {
-        this.duration = duration;
     }
 
     public List<Image> getImage() {
@@ -51,7 +84,6 @@ public class Track {
     public String toString() {
         return "Track{" +
                 "name='" + name + '\'' +
-                ", duration='" + duration + '\'' +
                 ", artist=" + artist +
                 ", image=" + image +
                 '}';
