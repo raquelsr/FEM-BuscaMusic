@@ -1,7 +1,7 @@
 package fem.miw.upm.es.buscamusic;
 
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -21,9 +21,11 @@ import java.util.List;
 
 import fem.miw.upm.es.buscamusic.modelsAlbum.Album;
 import fem.miw.upm.es.buscamusic.modelsArtist.Artist;
+import fem.miw.upm.es.buscamusic.modelsArtist.ArtistContract;
+import fem.miw.upm.es.buscamusic.modelsArtist.ArtistDetails;
+import fem.miw.upm.es.buscamusic.modelsArtist.RepositorioArtist;
 import fem.miw.upm.es.buscamusic.modelsTags.Tag;
 import fem.miw.upm.es.buscamusic.modelsTopTracks.TopTracks;
-import fem.miw.upm.es.buscamusic.modelsTopTracks.Tracks;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -47,6 +49,8 @@ public class MainActivity extends AppCompatActivity {
     private RadioButton rb_album;
     private RadioButton rb_topTracks;
     private RadioButton rb_tags;
+
+    private RepositorioArtist db_artis;
 
 
     private static final String METODO_INFOARTISTA = "artist.getinfo";
@@ -82,9 +86,9 @@ public class MainActivity extends AppCompatActivity {
         rb_topTracks = (RadioButton) findViewById(R.id.rb_toptracks);
         rb_tags = (RadioButton) findViewById(R.id.rb_tags);
 
-        if (rb_artista.isChecked()){
+        if (rb_artista.isChecked()) {
             buscar_infoAlbum.setVisibility(View.INVISIBLE);
-        } else if (rb_album.isChecked()){
+        } else if (rb_album.isChecked()) {
             buscar_infoAlbum.setVisibility(View.VISIBLE);
         }
 
@@ -118,36 +122,50 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void buscarInformacionAPI(){
+    public void buscarInformacionAPI() {
 
         String artist = buscar_infoArtista.getText().toString();
         String album = buscar_infoAlbum.getText().toString();
 
-        if (rb_artista.isChecked()){
+        if (rb_artista.isChecked()) {
             buscarInfoArtist(artist);
-        } else if (rb_album.isChecked()){
+        } else if (rb_album.isChecked()) {
             buscarInfoAlbum(artist, album);
-        } else if (rb_topTracks.isChecked()){
+        } else if (rb_topTracks.isChecked()) {
             buscarTopTracks();
-        } else if (rb_tags.isChecked()){
+        } else if (rb_tags.isChecked()) {
             buscarTopArtistPorTags(artist);
         }
     }
 
     private void buscarInfoArtist(String artist) {
 
+        db_artis = new RepositorioArtist(getApplicationContext());
+
+        ArtistDetails artistAux = db_artis.get(artist);
+        if (artistAux != null) {
+            mostrar_text.setText("YA ESTA EN BBDD" + artistAux.getNombre() + artistAux.getImagen());
+        } else {
+            infoArtistAPI(artist);
+        }
+
+    }
+
+    private void infoArtistAPI (final String artist){
         Call<Artist> call_async = lastfmApiService.getArtist(METODO_INFOARTISTA, artist, API_KEY, API_FORMAT, API_LENGUAJE);
 
         call_async.enqueue(new Callback<Artist>() {
             @Override
             public void onResponse(Call<Artist> call, Response<Artist> response) {
-                Log.i(LOG_TAG, "RESPONSE "+ response.toString());
+                Log.i(LOG_TAG, "RESPONSE " + response.toString());
                 Artist respuestaArtista = response.body();
-                if(respuestaArtista!=null){
+                if (respuestaArtista != null) {
                     mostrar_text.setText(respuestaArtista.getArtist().toString() + "\n");
                     Picasso.with(getApplicationContext()).
                             load(respuestaArtista.getArtist().getImage().get(3).getText())
                             .into(mostrar_img);
+
+                    addArtistToBBDD(respuestaArtista.getArtist());
 
                     Log.i(LOG_TAG, "Respuesta artista: " + respuestaArtista.toString());
                 } else {
@@ -168,16 +186,27 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public void buscarInfoAlbum(String artist, String album){
+    private void addArtistToBBDD(ArtistDetails artist) {
+
+        db_artis = new RepositorioArtist(getApplicationContext());
+
+        long id = db_artis.add(artist.getName(), artist.getImage().get(3).getText(),
+                artist.getBioArtist().getSummary(), artist.getBioArtist().getContent());
+
+        Log.i(LOG_TAG, "Artista añadido: " + id);
+
+    }
+
+    public void buscarInfoAlbum(String artist, String album) {
 
         Call<Album> call_async = lastfmApiService.getAlbum(METODO_INFOALBUM, artist, album, API_KEY, API_FORMAT, API_LENGUAJE);
 
         call_async.enqueue(new Callback<Album>() {
             @Override
             public void onResponse(Call<Album> call, Response<Album> response) {
-                Log.i(LOG_TAG, "RESPONSE "+ response.toString());
+                Log.i(LOG_TAG, "RESPONSE " + response.toString());
                 Album respuestaAlbum = response.body();
-                if(respuestaAlbum!=null){
+                if (respuestaAlbum != null) {
                     mostrar_text.setText(respuestaAlbum.getAlbum().toString() + "\n");
                     Picasso.with(getApplicationContext()).
                             load(respuestaAlbum.getAlbum().getImage().get(3).getText())
@@ -202,7 +231,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public void buscarTopTracks (){
+    public void buscarTopTracks() {
 
         Call<TopTracks> call_async = lastfmApiService.getTopTracks(METODO_TOPTRACKS, API_KEY, API_FORMAT, API_LENGUAJE);
 
@@ -210,9 +239,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<TopTracks> call, Response<TopTracks> response) {
                 Log.i(LOG_TAG, "Entra por aqui");
-                Log.i(LOG_TAG, "RESPONSE "+ response.toString());
+                Log.i(LOG_TAG, "RESPONSE " + response.toString());
                 TopTracks respuestaTopTracks = response.body();
-                if(respuestaTopTracks!=null){
+                if (respuestaTopTracks != null) {
                     mostrar_text.setText(respuestaTopTracks.toString() + "\n");
 
                     Log.i(LOG_TAG, "Respuesta artista: " + respuestaTopTracks.toString());
@@ -242,9 +271,9 @@ public class MainActivity extends AppCompatActivity {
         call_async.enqueue(new Callback<Tag>() {
             @Override
             public void onResponse(Call<Tag> call, Response<Tag> response) {
-                Log.i(LOG_TAG, "RESPONSE "+ response.toString());
+                Log.i(LOG_TAG, "RESPONSE " + response.toString());
                 Tag respuestaTags = response.body();
-                if(respuestaTags!=null){
+                if (respuestaTags != null) {
                     mostrar_text.setText(respuestaTags.getTopartists().toString());
                     /*Picasso.with(getApplicationContext()).
                             load(respuestaArtista.getArtist().getImage().get(3).getText())
