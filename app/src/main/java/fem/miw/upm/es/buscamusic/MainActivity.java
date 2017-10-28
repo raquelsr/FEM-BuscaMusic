@@ -22,6 +22,7 @@ import fem.miw.upm.es.buscamusic.modelsAlbum.Album;
 import fem.miw.upm.es.buscamusic.modelsAlbum.AlbumDetails;
 import fem.miw.upm.es.buscamusic.modelsAlbum.RepositorioAlbum;
 import fem.miw.upm.es.buscamusic.modelsArtist.Artist;
+import fem.miw.upm.es.buscamusic.modelsArtist.ArtistApi;
 import fem.miw.upm.es.buscamusic.modelsArtist.ArtistDetails;
 import fem.miw.upm.es.buscamusic.modelsArtist.RepositorioArtist;
 import fem.miw.upm.es.buscamusic.modelsTags.Tag;
@@ -132,7 +133,9 @@ public class MainActivity extends AppCompatActivity {
         String album = buscar_infoAlbum.getText().toString();
 
         if (rb_artista.isChecked()) {
-            buscarInfoArtist(artist);
+           // buscarInfoArtist(artist);
+            ArtistApi a = new ArtistApi(this,mostrar_text,mostrar_img);
+            a.buscarInfoArtist(artist);
         } else if (rb_album.isChecked()) {
             buscarInfoAlbum(artist, album);
         } else if (rb_topTracks.isChecked()) {
@@ -140,65 +143,6 @@ public class MainActivity extends AppCompatActivity {
         } else if (rb_tags.isChecked()) {
           //  buscarTopArtistPorTags(artist);
         }
-    }
-
-    private void buscarInfoArtist(String artist) {
-
-        db_artist = new RepositorioArtist(getApplicationContext());
-
-        ArtistDetails artistAux = db_artist.get(artist);
-        if (artistAux != null) {
-            mostrar_text.setText("YA ESTA EN BBDD" + artistAux.getNombre() + artistAux.getImagen());
-        } else {
-            infoArtistAPI(artist);
-        }
-
-    }
-
-    private void infoArtistAPI (final String artist){
-        Call<Artist> call_async = lastfmApiService.getArtist(METODO_INFOARTISTA, artist, API_KEY, API_FORMAT, API_LENGUAJE);
-
-        call_async.enqueue(new Callback<Artist>() {
-            @Override
-            public void onResponse(Call<Artist> call, Response<Artist> response) {
-                Log.i(LOG_TAG, "RESPONSE " + response.toString());
-                Artist respuestaArtista = response.body();
-                if (respuestaArtista != null) {
-                    mostrar_text.setText(respuestaArtista.getArtist().toString() + "\n");
-                    Picasso.with(getApplicationContext()).
-                            load(respuestaArtista.getArtist().getImage().get(3).getText())
-                            .into(mostrar_img);
-
-                    addArtistToBBDD(respuestaArtista.getArtist());
-
-                    Log.i(LOG_TAG, "Respuesta artista: " + respuestaArtista.toString());
-                } else {
-                    mostrar_text.setText("No hay artista");
-                    Log.i(LOG_TAG, "No se ha recuperado el artista");
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Artist> call, Throwable t) {
-                Toast.makeText(
-                        getApplicationContext(),
-                        "ERROR: " + t.getMessage(),
-                        Toast.LENGTH_LONG
-                ).show();
-                Log.e(LOG_TAG, t.getMessage());
-            }
-        });
-    }
-
-    private void addArtistToBBDD(ArtistDetails artist) {
-
-        db_artist = new RepositorioArtist(getApplicationContext());
-
-        long id = db_artist.add(artist.getName(), artist.getImage().get(3).getText(),
-                artist.getBioArtist().getSummary(), artist.getBioArtist().getContent());
-
-        Log.i(LOG_TAG, "Artista añadido: " + id);
-
     }
 
     // ALBUMMMMMMMM
