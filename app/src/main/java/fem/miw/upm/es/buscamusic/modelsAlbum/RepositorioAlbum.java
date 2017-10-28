@@ -13,10 +13,6 @@ import fem.miw.upm.es.buscamusic.modelsArtist.ArtistDetails;
 
 import static fem.miw.upm.es.buscamusic.modelsAlbum.AlbumContract.tablaAlbum;
 
-/**
- * Created by Raquel on 27/10/17.
- */
-
 public class RepositorioAlbum extends SQLiteOpenHelper {
 
     private static final String DB_NAME = tablaAlbum.TABLE_NAME + ".db";

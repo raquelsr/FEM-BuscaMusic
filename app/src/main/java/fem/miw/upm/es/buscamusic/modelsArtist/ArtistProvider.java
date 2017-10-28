@@ -47,9 +47,9 @@ public class ArtistProvider extends ContentProvider {
     public Cursor query(final Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
 
         SQLiteDatabase db_query = db_artist.getReadableDatabase();
-        String where = tablaArtista.COL_NOMBRE + " LIKE ?";
+        String where = tablaArtista.COL_NOMBRE + " LIKE ";
         selectionArgs = new String[1];
-        selectionArgs[0] = uri.getLastPathSegment() + '%';
+        selectionArgs[0] = uri.getLastPathSegment();
 
         Cursor c = db_query.query(tablaArtista.TABLE_NAME,
                 projection,

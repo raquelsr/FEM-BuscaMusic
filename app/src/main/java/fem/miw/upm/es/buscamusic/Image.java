@@ -17,18 +17,6 @@ public class Image {
         return text;
     }
 
-    public void setText(String text) {
-        this.text = text;
-    }
-
-    public String getSize() {
-        return size;
-    }
-
-    public void setSize(String size) {
-        this.size = size;
-    }
-
     @Override
     public String toString() {
         return "Image{" +

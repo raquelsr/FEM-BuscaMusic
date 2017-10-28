@@ -14,6 +14,6 @@ public class ArtistContract {
         static final String COL_NOMBRE   = "nombre";
         static final String COL_IMAGEN   = "imagen";
         static final String COL_BIO_RESUMEN   = "bio_resumen";
-        static final String COL_BIO_CONTENIDO = "bio_contenid";
+        static final String COL_BIO_CONTENIDO = "bio_contenido";
     }
 }

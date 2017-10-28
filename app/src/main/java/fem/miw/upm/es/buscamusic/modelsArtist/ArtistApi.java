@@ -1,28 +1,14 @@
 package fem.miw.upm.es.buscamusic.modelsArtist;
 
 import android.content.Context;
-import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
-import fem.miw.upm.es.buscamusic.Image;
 import fem.miw.upm.es.buscamusic.LastFMAPIService;
-import fem.miw.upm.es.buscamusic.MainActivity;
-import fem.miw.upm.es.buscamusic.R;
-import fem.miw.upm.es.buscamusic.modelsAlbum.RepositorioAlbum;
-import fem.miw.upm.es.buscamusic.modelsTopTracks.RepositorioTopTracks;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -48,7 +34,7 @@ public class ArtistApi {
     private TextView tv;
     private ImageView iv;
 
-    public ArtistApi(Context context, TextView tv, ImageView iv){
+    public ArtistApi(Context context, TextView tv, ImageView iv) {
         this.context = context;
         this.tv = tv;
         this.iv = iv;
@@ -61,13 +47,14 @@ public class ArtistApi {
         lastfmApiService = retrofit.create(LastFMAPIService.class);
 
     }
+
     public void buscarInfoArtist(String artist) {
 
         db_artist = new RepositorioArtist(context);
 
         ArtistDetails artistAux = db_artist.get(artist);
         if (artistAux != null) {
-            if (tv!=null){
+            if (tv != null) {
                 tv.setText("YA ESTA EN BBDD" + artistAux.getNombre() + artistAux.getImagen());
             }
         } else {
@@ -75,7 +62,7 @@ public class ArtistApi {
         }
     }
 
-    public void infoArtistAPI (String artist){
+    public void infoArtistAPI(String artist) {
         Call<Artist> call_async = lastfmApiService.getArtist(METODO_INFOARTISTA, artist, API_KEY, API_FORMAT, API_LENGUAJE);
 
         call_async.enqueue(new Callback<Artist>() {
@@ -84,7 +71,7 @@ public class ArtistApi {
                 Log.i(LOG_TAG, "RESPONSE " + response.toString());
                 Artist respuestaArtista = response.body();
                 if (respuestaArtista != null) {
-                    if (tv!=null && iv!=null){
+                    if (tv != null && iv != null) {
                         tv.setText(respuestaArtista.getArtist().toString() + "\n");
                         Picasso.with(context).
                                 load(respuestaArtista.getArtist().getImage().get(3).getText())
@@ -95,7 +82,7 @@ public class ArtistApi {
 
                     Log.i(LOG_TAG, "Respuesta artista: " + respuestaArtista.toString());
                 } else {
-                    if(tv!=null){
+                    if (tv != null) {
                         tv.setText("No hay artista");
                     }
 

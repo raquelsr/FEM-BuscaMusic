@@ -2,9 +2,6 @@ package fem.miw.upm.es.buscamusic.modelsAlbum;
 
 import android.provider.BaseColumns;
 
-/**
- * Created by Raquel on 27/10/17.
- */
 
 public class AlbumContract {
 
