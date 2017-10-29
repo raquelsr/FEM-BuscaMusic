@@ -11,6 +11,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
+
 import fem.miw.upm.es.buscamusic.modelsAlbum.AlbumApi;
 import fem.miw.upm.es.buscamusic.modelsArtist.ArtistApi;
 import fem.miw.upm.es.buscamusic.modelsTopTracks.TopTracksApi;
@@ -56,6 +59,9 @@ public class MainActivity extends AppCompatActivity {
         } else if (rb_album.isChecked()) {
             buscar_infoAlbum.setVisibility(View.VISIBLE);
         }
+
+        Picasso.with(getApplicationContext()).load("https://lastfm-img2.akamaized.net/i/u/300x300/898dd9f0f3474ff9ad595bbc2e7cb785.png")
+                .into(mostrar_img);
     }
 
     @Override

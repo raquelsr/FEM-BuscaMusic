@@ -73,10 +73,12 @@ public class AlbumApi {
                 Log.i(LOG_TAG, "RESPONSE " + response.toString());
                 Album respuestaAlbum = response.body();
                 if (respuestaAlbum != null) {
-                    tv.setText(respuestaAlbum.getAlbum().toString() + "\n");
-                    Picasso.with(context).
-                            load(respuestaAlbum.getAlbum().getImage().get(3).getText())
-                            .into(iv);
+                    if (tv!=null && iv!=null){
+                        tv.setText(respuestaAlbum.getAlbum().toString() + "\n");
+                        Picasso.with(context).
+                                load(respuestaAlbum.getAlbum().getImage().get(3).getText())
+                                .into(iv);
+                    }
 
                     addAlbumToBBDD(respuestaAlbum.getAlbum(), artist);
 

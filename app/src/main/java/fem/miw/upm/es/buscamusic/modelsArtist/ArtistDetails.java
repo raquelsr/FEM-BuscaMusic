@@ -29,13 +29,16 @@ public class ArtistDetails implements Parcelable {
     private String imagen;
     private String bio_resumen;
     private String bio_contenido;
+    private int puntuacion;
+    private String comentario;
 
-    public ArtistDetails(int id, String nombre, String imagen, String bio_resumen, String bio_contenido) {
+    public ArtistDetails(int id, String nombre, String imagen, String bio_resumen, String bio_contenido, int puntuacion) {
         this.id = id;
         this.nombre = nombre;
         this.imagen = imagen;
         this.bio_resumen = bio_resumen;
         this.bio_contenido = bio_contenido;
+        this.puntuacion = puntuacion;
     }
 
     public String getName() {
@@ -100,6 +103,22 @@ public class ArtistDetails implements Parcelable {
 
     public void setBio_contenido(String bio_contenido) {
         this.bio_contenido = bio_contenido;
+    }
+
+    public int getPuntuacion() {
+        return puntuacion;
+    }
+
+    public void setPuntuacion(int puntuacion) {
+        this.puntuacion = puntuacion;
+    }
+
+    public String getComentario() {
+        return comentario;
+    }
+
+    public void setComentario(String comentario) {
+        this.comentario = comentario;
     }
 
     @Override

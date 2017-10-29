@@ -25,6 +25,11 @@
             android:name=".modelsArtist.ArtistProvider"
             android:exported="true">
         </provider>
+        <provider
+            android:authorities="fem.miw.upm.es.buscamusic.modelsAlbum.provider"
+            android:name=".modelsAlbum.AlbumProvider"
+            android:exported="true">
+        </provider>
     </application>
 
 </manifest>

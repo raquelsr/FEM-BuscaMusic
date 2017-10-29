@@ -59,11 +59,6 @@
         android:hint="Introduce nombre del album" />
 
 
-    <ImageView
-        android:id="@+id/iv_mostrarimagen"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:srcCompat="@mipmap/ic_launcher" />
 
     <ScrollView
         android:layout_width="match_parent"
