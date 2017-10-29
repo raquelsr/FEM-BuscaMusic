@@ -26,7 +26,8 @@ class RepositorioAlbum extends SQLiteOpenHelper {
                 + tablaAlbum.COL_NOMBRE + " TEXT, "
                 + tablaAlbum.COL_ARTISTA + " TEXT, "
                 + tablaAlbum.COL_IMAGEN + " TEXT, "
-                + tablaAlbum.COL_TRACKS + " TEXT)";
+                + tablaAlbum.COL_TRACKS + " TEXT, "
+                + tablaAlbum.COL_COMENTARIOS +" TEXT)";
         db.execSQL(consultaSQL);
     }
 
@@ -66,7 +67,8 @@ class RepositorioAlbum extends SQLiteOpenHelper {
                     cursor.getString(cursor.getColumnIndex(tablaAlbum.COL_NOMBRE)),
                     cursor.getString(cursor.getColumnIndex(tablaAlbum.COL_ARTISTA)),
                     cursor.getString(cursor.getColumnIndex(tablaAlbum.COL_IMAGEN)),
-                    cursor.getString(cursor.getColumnIndex(tablaAlbum.COL_TRACKS))
+                    cursor.getString(cursor.getColumnIndex(tablaAlbum.COL_TRACKS)),
+                    cursor.getString(cursor.getColumnIndex(tablaAlbum.COL_COMENTARIOS))
             );
         }
 
@@ -90,7 +92,8 @@ class RepositorioAlbum extends SQLiteOpenHelper {
                         cursor.getString(cursor.getColumnIndex(tablaAlbum.COL_NOMBRE)),
                         cursor.getString(cursor.getColumnIndex(tablaAlbum.COL_ARTISTA)),
                         cursor.getString(cursor.getColumnIndex(tablaAlbum.COL_IMAGEN)),
-                        cursor.getString(cursor.getColumnIndex(tablaAlbum.COL_TRACKS))
+                        cursor.getString(cursor.getColumnIndex(tablaAlbum.COL_TRACKS)),
+                        cursor.getString(cursor.getColumnIndex(tablaAlbum.COL_COMENTARIOS))
                 );
 
                 listAlbum.add(album);

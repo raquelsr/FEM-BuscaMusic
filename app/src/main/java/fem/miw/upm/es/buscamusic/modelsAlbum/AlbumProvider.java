@@ -90,6 +90,12 @@ public class AlbumProvider extends ContentProvider {
 
     @Override
     public int update(@NonNull Uri uri, ContentValues values, String selection, String[] selectionArgs) {
-        return 0;
+        String where;
+        where = "nombre = \"" + uri.getLastPathSegment() + "\"";
+
+        SQLiteDatabase db = db_album.getWritableDatabase();
+        int filasActualizadas = db.update(tablaAlbum.TABLE_NAME, values, where, selectionArgs);
+
+        return filasActualizadas;
     }
 }

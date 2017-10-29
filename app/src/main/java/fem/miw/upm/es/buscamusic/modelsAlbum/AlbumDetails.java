@@ -25,13 +25,15 @@ public class AlbumDetails {
     private String artista;
     private String imagen;
     private String listTracks;
+    private String comentarios;
 
-    public AlbumDetails(int id, String nombre, String artista, String imagen, String listTracks) {
+    public AlbumDetails(int id, String nombre, String artista, String imagen, String listTracks, String comentarios) {
         this.id = id;
         this.nombre = nombre;
         this.artista = artista;
         this.imagen = imagen;
         this.listTracks = listTracks;
+        this.comentarios = comentarios;
     }
 
     public int getId (){
@@ -66,12 +68,20 @@ public class AlbumDetails {
         this.name = name;
     }
 
-    public List<Image> getImage() {
+    List<Image> getImage() {
         return image;
     }
 
-    public Tracks getTracks() {
+    Tracks getTracks() {
         return tracks;
+    }
+
+    public String getComentarios() {
+        return comentarios;
+    }
+
+    public void setComentarios(String comentarios) {
+        this.comentarios = comentarios;
     }
 
     @Override

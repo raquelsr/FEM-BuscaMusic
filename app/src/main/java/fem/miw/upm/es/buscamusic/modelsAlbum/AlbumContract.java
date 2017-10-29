@@ -16,6 +16,7 @@ class AlbumContract {
         static final String COL_ARTISTA  = "artista";
         static final String COL_IMAGEN   = "imagen";
         static final String COL_TRACKS  = "tracks";
+        static final String COL_COMENTARIOS  = "comentarios";
     }
 
 }
