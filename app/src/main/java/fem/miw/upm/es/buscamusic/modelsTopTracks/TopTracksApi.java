@@ -9,16 +9,11 @@ import android.widget.Toast;
 import java.util.List;
 
 import fem.miw.upm.es.buscamusic.LastFMAPIService;
-import fem.miw.upm.es.buscamusic.modelsArtist.RepositorioArtist;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-
-/**
- * Created by Raquel on 28/10/17.
- */
 
 public class TopTracksApi {
 

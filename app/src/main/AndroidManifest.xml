@@ -30,6 +30,11 @@
             android:name=".modelsAlbum.AlbumProvider"
             android:exported="true">
         </provider>
+        <provider
+            android:authorities="fem.miw.upm.es.buscamusic.modelsTopTracks.provider"
+            android:name=".modelsTopTracks.TopTracksProvider"
+            android:exported="true">
+        </provider>
     </application>
 
 </manifest>
