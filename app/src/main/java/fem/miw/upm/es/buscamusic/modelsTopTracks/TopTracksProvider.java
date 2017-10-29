@@ -61,8 +61,8 @@ public class TopTracksProvider extends ContentProvider {
             Thread hilo1 = new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    ArtistApi aa = new ArtistApi(getContext(),null,null);
-                    aa.infoArtistAPI(uri.getLastPathSegment());
+                    TopTracksApi aa = new TopTracksApi(getContext(),null,null);
+                    aa.infoTopTrackAPI();
                 }
             });
             hilo1.start();

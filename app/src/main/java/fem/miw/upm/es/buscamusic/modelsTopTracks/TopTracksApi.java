@@ -68,17 +68,18 @@ public class TopTracksApi {
         call_async.enqueue(new Callback<TopTracks>() {
             @Override
             public void onResponse(Call<TopTracks> call, Response<TopTracks> response) {
-                Log.i(LOG_TAG, "Entra por aqui");
-                Log.i(LOG_TAG, "RESPONSE " + response.toString());
+                Log.i(LOG_TAG, "Entra por aqui TOPTRACK");
+                Log.i(LOG_TAG, "RESPONSE TOPTRACK " + response.toString());
                 TopTracks respuestaTopTracks = response.body();
                 if (respuestaTopTracks != null) {
-                    tv.setText(respuestaTopTracks.toString() + "\n");
-
+                    if (tv!=null){
+                        tv.setText(respuestaTopTracks.toString() + "\n");
+                    }
                     addTracksToBBDD(respuestaTopTracks.getTracks().getTrack());
-                    Log.i(LOG_TAG, "Respuesta artista: " + respuestaTopTracks.toString());
+                    Log.i(LOG_TAG, "Respuesta TRACK: " + respuestaTopTracks.toString());
                 } else {
-                    tv.setText("No hay artista");
-                    Log.i(LOG_TAG, "No se ha recuperado el artista");
+                    tv.setText("No hay tracks");
+                    Log.i(LOG_TAG, "No se ha recuperado el tracks");
                 }
             }
 
@@ -98,9 +99,10 @@ public class TopTracksApi {
     private void addTracksToBBDD(List<Track> tracks) {
 
         db_TopTracks = new RepositorioTopTracks(context);
+        Log.i(LOG_TAG, "AddTracksT");
 
         for (Track t: tracks){
-            db_TopTracks.add(t.getName(), t.getImage().get(3).getText(), t.getArtist().getName());
+            db_TopTracks.add(t.getName(), t.getImage().get(2).getText(), t.getArtist().getName());
         }
 
         Log.i(LOG_TAG, "TopTracks añadidos ");
