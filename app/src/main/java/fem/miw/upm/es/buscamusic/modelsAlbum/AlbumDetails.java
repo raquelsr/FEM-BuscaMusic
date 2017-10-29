@@ -50,24 +50,12 @@ public class AlbumDetails {
         return artista;
     }
 
-    public void setArtista(String artista) {
-        this.artista = artista;
-    }
-
     public String getImagen() {
         return imagen;
     }
 
-    public void setImagen(String imagen) {
-        this.imagen = imagen;
-    }
-
     public String getListTracks() {
         return listTracks;
-    }
-
-    public void setListTracks(String listTracks) {
-        this.listTracks = listTracks;
     }
 
     public String getName() {
@@ -82,18 +70,9 @@ public class AlbumDetails {
         return image;
     }
 
-    public void setImage(List<Image> image) {
-        this.image = image;
-    }
-
     public Tracks getTracks() {
         return tracks;
     }
-
-    public void setTracks(Tracks tracks) {
-        this.tracks = tracks;
-    }
-
 
     @Override
     public String toString() {

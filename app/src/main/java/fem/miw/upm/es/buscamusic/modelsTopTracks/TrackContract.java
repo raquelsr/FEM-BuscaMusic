@@ -2,15 +2,12 @@ package fem.miw.upm.es.buscamusic.modelsTopTracks;
 
 import android.provider.BaseColumns;
 
-/**
- * Created by Raquel on 27/10/17.
- */
 
-public class TrackContract {
+ class TrackContract {
 
     private TrackContract() {}
 
-    public static abstract class tablaTopTracks implements BaseColumns {
+     static abstract class tablaTopTracks implements BaseColumns {
 
         static final String TABLE_NAME   = "topTracks";
 

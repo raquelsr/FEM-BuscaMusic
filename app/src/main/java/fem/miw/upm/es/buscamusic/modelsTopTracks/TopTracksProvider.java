@@ -8,10 +8,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.util.Log;
 
-import java.util.logging.Handler;
-
-import fem.miw.upm.es.buscamusic.modelsArtist.ArtistApi;
-import fem.miw.upm.es.buscamusic.modelsArtist.ArtistContract;
 import static fem.miw.upm.es.buscamusic.modelsTopTracks.TrackContract.tablaTopTracks;
 
 public class TopTracksProvider extends ContentProvider {
@@ -58,14 +54,14 @@ public class TopTracksProvider extends ContentProvider {
             Log.i("MiW", "Probando");
             Log.i("MiW", "Por aqui");
 
-            Thread hilo1 = new Thread(new Runnable() {
+            Thread buscar = new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    TopTracksApi aa = new TopTracksApi(getContext(),null,null);
-                    aa.infoTopTrackAPI();
+                    TopTracksApi buscarTracks = new TopTracksApi(getContext(),null);
+                    buscarTracks.infoTopTrackAPI();
                 }
             });
-            hilo1.start();
+            buscar.start();
 
             c = db_query.query(tablaTopTracks.TABLE_NAME,
                     projection,
@@ -81,7 +77,7 @@ public class TopTracksProvider extends ContentProvider {
     public String getType(Uri uri) {
         switch (uriMatcher.match(uri)){
             case ID_URI_TOP_TRACKS:
-                return "vnd.android.cursor/vnd.miw.toptracks";
+                return "vnd.android.cursor.dir/vnd.miw.toptracks";
             default:
                 return null;
         }

@@ -9,9 +9,6 @@ public class Image {
     @SerializedName("#text")
     @Expose
     private String text;
-    @SerializedName("size")
-    @Expose
-    private String size;
 
     public String getText() {
         return text;
@@ -21,7 +18,6 @@ public class Image {
     public String toString() {
         return "Image{" +
                 "text='" + text + '\'' +
-                ", size='" + size + '\'' +
                 '}';
     }
 }

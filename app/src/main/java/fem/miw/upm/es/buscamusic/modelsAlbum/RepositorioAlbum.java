@@ -8,17 +8,14 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import java.util.ArrayList;
 
-import fem.miw.upm.es.buscamusic.modelsArtist.ArtistContract;
-import fem.miw.upm.es.buscamusic.modelsArtist.ArtistDetails;
-
 import static fem.miw.upm.es.buscamusic.modelsAlbum.AlbumContract.tablaAlbum;
 
-public class RepositorioAlbum extends SQLiteOpenHelper {
+class RepositorioAlbum extends SQLiteOpenHelper {
 
     private static final String DB_NAME = tablaAlbum.TABLE_NAME + ".db";
     private static final int DB_VERSION = 1;
 
-    public RepositorioAlbum(Context contexto) {
+    RepositorioAlbum(Context contexto) {
         super(contexto, DB_NAME, null, DB_VERSION);
     }
 
@@ -54,7 +51,7 @@ public class RepositorioAlbum extends SQLiteOpenHelper {
     }
 
 
-    public AlbumDetails get(String artista, String nombre) {
+    AlbumDetails get(String artista, String nombre) {
         String consultaSQL = "SELECT * FROM " + tablaAlbum.TABLE_NAME +
                 " WHERE " + tablaAlbum.COL_NOMBRE + " LIKE " + "\"" + nombre + "\"" + " AND " +
                 tablaAlbum.COL_ARTISTA + " LIKE " + "\"" + artista + "\"";

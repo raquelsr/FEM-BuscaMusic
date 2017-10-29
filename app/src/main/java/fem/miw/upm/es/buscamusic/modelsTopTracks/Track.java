@@ -48,10 +48,6 @@ public class Track {
         return artist;
     }
 
-    public void setArtist(ArtistDetails artist) {
-        this.artist = artist;
-    }
-
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
@@ -60,17 +56,11 @@ public class Track {
         return imagen;
     }
 
-    public void setImagen(String imagen) {
-        this.imagen = imagen;
-    }
 
     public String getArtista() {
         return artista;
     }
 
-    public void setArtista(String artista) {
-        this.artista = artista;
-    }
 
     public String getName() {
         return name;
@@ -82,10 +72,6 @@ public class Track {
 
     public List<Image> getImage() {
         return image;
-    }
-
-    public void setImage(List<Image> image) {
-        this.image = image;
     }
 
     @Override

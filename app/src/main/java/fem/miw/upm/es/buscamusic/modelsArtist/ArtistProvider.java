@@ -6,14 +6,8 @@ import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
-import android.os.Looper;
-import android.os.Message;
 import android.util.Log;
 
-import java.util.logging.Handler;
-import java.util.logging.LogRecord;
-
-import fem.miw.upm.es.buscamusic.MainActivity;
 
 import static fem.miw.upm.es.buscamusic.modelsArtist.ArtistContract.tablaArtista;
 
@@ -29,8 +23,6 @@ public class ArtistProvider extends ContentProvider {
 
     private static final int ID_URI_ARTISTA_NOMBRE = 1;
     private static final UriMatcher uriMatcher;
-
-    private Handler mHandler;
 
     static {
         uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
@@ -57,20 +49,16 @@ public class ArtistProvider extends ContentProvider {
                 selectionArgs,null,null,
                 sortOrder);
 
-        Log.i("MiW", selectionArgs[0]);
-
         if (c.getCount() == 0){
-            Log.i("MiW", "Probando");
-            Log.i("MiW", "Por aqui");
 
-            Thread hilo1 = new Thread(new Runnable() {
+            Thread buscar = new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    ArtistApi aa = new ArtistApi(getContext(),null,null);
-                    aa.infoArtistAPI(uri.getLastPathSegment());
+                    ArtistApi busquedaArtista = new ArtistApi(getContext(),null,null);
+                    busquedaArtista.infoArtistAPI(uri.getLastPathSegment());
                 }
             });
-            hilo1.start();
+            buscar.start();
 
             c = db_query.query(tablaArtista.TABLE_NAME,
                     projection,

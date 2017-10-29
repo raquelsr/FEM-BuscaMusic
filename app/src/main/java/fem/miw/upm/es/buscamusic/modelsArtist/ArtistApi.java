@@ -1,6 +1,7 @@
 package fem.miw.upm.es.buscamusic.modelsArtist;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -55,6 +56,7 @@ public class ArtistApi {
         ArtistDetails artistAux = db_artist.get(artist);
         if (artistAux != null) {
             if (tv != null) {
+                Log.i(LOG_TAG, "El album ya esta en BBDD artistas");
                 tv.setText("YA ESTA EN BBDD" + artistAux.getNombre() + artistAux.getImagen());
             }
         } else {
@@ -62,13 +64,13 @@ public class ArtistApi {
         }
     }
 
-    public void infoArtistAPI(String artist) {
+    void infoArtistAPI(String artist) {
         Call<Artist> call_async = lastfmApiService.getArtist(METODO_INFOARTISTA, artist, API_KEY, API_FORMAT, API_LENGUAJE);
 
         call_async.enqueue(new Callback<Artist>() {
             @Override
-            public void onResponse(Call<Artist> call, Response<Artist> response) {
-                Log.i(LOG_TAG, "RESPONSE " + response.toString());
+            public void onResponse(@NonNull Call<Artist> call, @NonNull Response<Artist> response) {
+                Log.i(LOG_TAG, "RESPONSE: " + response.toString());
                 Artist respuestaArtista = response.body();
                 if (respuestaArtista != null) {
                     if (tv != null && iv != null) {
@@ -79,8 +81,8 @@ public class ArtistApi {
                     }
 
                     addArtistToBBDD(respuestaArtista.getArtist());
-
                     Log.i(LOG_TAG, "Respuesta artista: " + respuestaArtista.toString());
+
                 } else {
                     if (tv != null) {
                         tv.setText("No hay artista");
@@ -91,7 +93,7 @@ public class ArtistApi {
             }
 
             @Override
-            public void onFailure(Call<Artist> call, Throwable t) {
+            public void onFailure(@NonNull Call<Artist> call, Throwable t) {
                 Toast.makeText(
                         context,
                         "ERROR: " + t.getMessage(),
@@ -106,8 +108,7 @@ public class ArtistApi {
 
         db_artist = new RepositorioArtist(context);
 
-        long id = db_artist.add(artist.getName(), artist.getImage().get(3).getText(),
-                artist.getBioArtist().getSummary(), artist.getBioArtist().getContent());
+        long id = db_artist.add(artist.getName(), artist.getImage().get(3).getText(), artist.getBioArtist().getContent());
 
         Log.i(LOG_TAG, "Artista añadido: " + id);
 

@@ -1,6 +1,7 @@
 package fem.miw.upm.es.buscamusic.modelsAlbum;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -55,7 +56,8 @@ public class AlbumApi {
         AlbumDetails albumAux = db_albums.get(artist, album);
         if (albumAux != null) {
             if (tv!=null){
-                tv.setText("YA ESTA EN BBDD" + albumAux.getNombre() + albumAux.getImagen());
+                Log.i(LOG_TAG, "El album ya esta en BBDD albums");
+                tv.setText("YA ESTA EN BBDD " + albumAux.getNombre() + albumAux.getImagen());
             }
         } else {
             infoAlbumAPI(artist, album);
@@ -63,14 +65,14 @@ public class AlbumApi {
 
     }
 
-    public void infoAlbumAPI(final String artist, final String album) {
+    void infoAlbumAPI(final String artist, final String album) {
 
         Call<Album> call_async = lastfmApiService.getAlbum(METODO_INFOALBUM, artist, album, API_KEY, API_FORMAT, API_LENGUAJE);
 
         call_async.enqueue(new Callback<Album>() {
             @Override
-            public void onResponse(Call<Album> call, Response<Album> response) {
-                Log.i(LOG_TAG, "RESPONSE " + response.toString());
+            public void onResponse(@NonNull Call<Album> call, Response<Album> response) {
+
                 Album respuestaAlbum = response.body();
                 if (respuestaAlbum != null) {
                     if (tv!=null && iv!=null){
@@ -81,16 +83,18 @@ public class AlbumApi {
                     }
 
                     addAlbumToBBDD(respuestaAlbum.getAlbum(), artist);
+                    Log.i(LOG_TAG, "Respuesta album: " + respuestaAlbum.toString());
 
-                    Log.i(LOG_TAG, "Respuesta artista: " + respuestaAlbum.toString());
                 } else {
-                    tv.setText("No hay artista");
-                    Log.i(LOG_TAG, "No se ha recuperado el artista");
+                    if (tv!=null){
+                        tv.setText("No hay album");
+                    }
+                    Log.i(LOG_TAG, "No se ha recuperado el album");
                 }
             }
 
             @Override
-            public void onFailure(Call<Album> call, Throwable t) {
+            public void onFailure(@NonNull Call<Album> call, Throwable t) {
                 Toast.makeText(
                         context,
                         "ERROR: " + t.getMessage(),
@@ -105,13 +109,9 @@ public class AlbumApi {
 
         db_albums = new RepositorioAlbum(context);
 
-        Log.i(LOG_TAG, "GUARDAR TRACKS" + album.getTracks().guardarNombresTracks());
-
         long id = db_albums.add(album.getName(), artist, album.getImage().get(3).getText(), album.getTracks().guardarNombresTracks());
 
         Log.i(LOG_TAG, "Album añadido: " + id);
-        Log.i (LOG_TAG, "TRACKS" + album.getTracks().guardarNombresTracks());
-
     }
 
 }

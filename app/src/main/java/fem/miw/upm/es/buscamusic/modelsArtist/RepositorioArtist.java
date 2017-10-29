@@ -26,7 +26,6 @@ public class RepositorioArtist extends SQLiteOpenHelper {
                 + tablaArtista.COL_ID+ " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + tablaArtista.COL_NOMBRE  + " TEXT, "
                 + tablaArtista.COL_IMAGEN     + " TEXT, "
-                + tablaArtista.COL_BIO_RESUMEN     + " TEXT, "
                 + tablaArtista.COL_BIO_CONTENIDO   + " TEXT, "
                 + tablaArtista.COL_PUNTUACION + " INTEGER)";
         db.execSQL(consultaSQL);
@@ -39,16 +38,15 @@ public class RepositorioArtist extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public long add(String nombre, String imagen, String bio_resumen, String bio_contenido ) {
+    public long add(String nombre, String imagen, String bio_contenido ) {
 
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues valores = new ContentValues();
         valores.put(tablaArtista.COL_NOMBRE, nombre);
         valores.put(tablaArtista.COL_IMAGEN, imagen);
-        valores.put(tablaArtista.COL_BIO_RESUMEN, bio_resumen);
         valores.put(tablaArtista.COL_BIO_CONTENIDO, bio_contenido);
-        valores.put(tablaArtista.COL_PUNTUACION, 5);
+        valores.put(tablaArtista.COL_PUNTUACION, -1);
 
         return db.insert(tablaArtista.TABLE_NAME, null, valores);
     }
@@ -67,7 +65,6 @@ public class RepositorioArtist extends SQLiteOpenHelper {
                         cursor.getInt(cursor.getColumnIndex(tablaArtista.COL_ID)),
                         cursor.getString(cursor.getColumnIndex(tablaArtista.COL_NOMBRE)),
                         cursor.getString(cursor.getColumnIndex(tablaArtista.COL_IMAGEN)),
-                        cursor.getString(cursor.getColumnIndex(tablaArtista.COL_BIO_RESUMEN)),
                         cursor.getString(cursor.getColumnIndex(tablaArtista.COL_BIO_CONTENIDO)),
                          cursor.getInt(cursor.getColumnIndex(tablaArtista.COL_PUNTUACION))
                 );
@@ -92,7 +89,6 @@ public class RepositorioArtist extends SQLiteOpenHelper {
                         cursor.getInt(cursor.getColumnIndex(tablaArtista.COL_ID)),
                         cursor.getString(cursor.getColumnIndex(tablaArtista.COL_NOMBRE)),
                         cursor.getString(cursor.getColumnIndex(tablaArtista.COL_IMAGEN)),
-                        cursor.getString(cursor.getColumnIndex(tablaArtista.COL_BIO_RESUMEN)),
                         cursor.getString(cursor.getColumnIndex(tablaArtista.COL_BIO_CONTENIDO)),
                         cursor.getInt(cursor.getColumnIndex(tablaArtista.COL_PUNTUACION))
                         );

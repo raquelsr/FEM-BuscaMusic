@@ -32,12 +32,10 @@ public class TopTracksApi {
 
     private Context context;
     private TextView tv;
-    private ImageView iv;
 
-    public TopTracksApi(Context context, TextView tv, ImageView iv){
+    public TopTracksApi(Context context, TextView tv){
         this.context = context;
         this.tv = tv;
-        this.iv = iv;
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(API_URL)
@@ -54,6 +52,7 @@ public class TopTracksApi {
 
         List<Track> listTracks = db_TopTracks.getAll(limit);
         if (!listTracks.isEmpty()) {
+            Log.i(LOG_TAG, "El album ya esta en BBDD TopTracks");
             tv.setText("YA ESTA EN BBDD" + listTracks.size() + listTracks.toString());
         } else {
             infoTopTrackAPI();
@@ -68,15 +67,13 @@ public class TopTracksApi {
         call_async.enqueue(new Callback<TopTracks>() {
             @Override
             public void onResponse(Call<TopTracks> call, Response<TopTracks> response) {
-                Log.i(LOG_TAG, "Entra por aqui TOPTRACK");
-                Log.i(LOG_TAG, "RESPONSE TOPTRACK " + response.toString());
                 TopTracks respuestaTopTracks = response.body();
                 if (respuestaTopTracks != null) {
                     if (tv!=null){
                         tv.setText(respuestaTopTracks.toString() + "\n");
                     }
                     addTracksToBBDD(respuestaTopTracks.getTracks().getTrack());
-                    Log.i(LOG_TAG, "Respuesta TRACK: " + respuestaTopTracks.toString());
+                    Log.i(LOG_TAG, "Respuesta TRACKS: " + respuestaTopTracks.toString());
                 } else {
                     tv.setText("No hay tracks");
                     Log.i(LOG_TAG, "No se ha recuperado el tracks");
@@ -91,7 +88,6 @@ public class TopTracksApi {
                         Toast.LENGTH_LONG
                 ).show();
                 Log.e(LOG_TAG, t.getMessage());
-                Log.e(LOG_TAG, "ERROR POR QUI");
             }
         });
     }
@@ -99,7 +95,6 @@ public class TopTracksApi {
     private void addTracksToBBDD(List<Track> tracks) {
 
         db_TopTracks = new RepositorioTopTracks(context);
-        Log.i(LOG_TAG, "AddTracksT");
 
         for (Track t: tracks){
             db_TopTracks.add(t.getName(), t.getImage().get(2).getText(), t.getArtist().getName());

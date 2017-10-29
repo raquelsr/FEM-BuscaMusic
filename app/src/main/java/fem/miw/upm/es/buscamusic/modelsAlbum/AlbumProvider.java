@@ -6,7 +6,7 @@ import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
-import android.util.Log;
+import android.support.annotation.NonNull;
 
 import static fem.miw.upm.es.buscamusic.modelsAlbum.AlbumContract.tablaAlbum;
 
@@ -35,7 +35,7 @@ public class AlbumProvider extends ContentProvider {
     }
 
     @Override
-    public Cursor query(final Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
+    public Cursor query(@NonNull final Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
 
         SQLiteDatabase db_query = db_album.getReadableDatabase();
         String where = tablaAlbum.COL_NOMBRE + " LIKE ?";
@@ -48,17 +48,15 @@ public class AlbumProvider extends ContentProvider {
                 selectionArgs,null,null,
                 sortOrder);
 
-        Log.i("MiW", selectionArgs[0]);
-
         if (c.getCount() == 0){
-            Thread hilo1 = new Thread(new Runnable() {
+            Thread busqueda = new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    AlbumApi aa = new AlbumApi(getContext(),null,null);
-                    aa.infoAlbumAPI(uri.getPathSegments().get(1), uri.getPathSegments().get(2));
+                    AlbumApi buscaralbum = new AlbumApi(getContext(),null,null);
+                    buscaralbum.infoAlbumAPI(uri.getPathSegments().get(1), uri.getPathSegments().get(2));
                 }
             });
-            hilo1.start();
+            busqueda.start();
 
             c = db_query.query(tablaAlbum.TABLE_NAME,
                     projection,
@@ -71,7 +69,7 @@ public class AlbumProvider extends ContentProvider {
     }
 
     @Override
-    public String getType(Uri uri) {
+    public String getType(@NonNull Uri uri) {
         switch (uriMatcher.match(uri)){
             case ID_URI_ALBUM_NOMBRE:
                 return "vnd.android.cursor.item/vnd.miw.album";
@@ -81,17 +79,17 @@ public class AlbumProvider extends ContentProvider {
     }
 
     @Override
-    public Uri insert(Uri uri, ContentValues values) {
+    public Uri insert(@NonNull Uri uri, ContentValues values) {
         return null;
     }
 
     @Override
-    public int delete(Uri uri, String selection, String[] selectionArgs) {
+    public int delete(@NonNull Uri uri, String selection, String[] selectionArgs) {
         return 0;
     }
 
     @Override
-    public int update(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
+    public int update(@NonNull Uri uri, ContentValues values, String selection, String[] selectionArgs) {
         return 0;
     }
 }

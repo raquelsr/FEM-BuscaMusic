@@ -14,10 +14,6 @@ public class Album {
         return album;
     }
 
-    public void setAlbum(AlbumDetails album) {
-        this.album = album;
-    }
-
     @Override
     public String toString() {
         return "Album{" +
