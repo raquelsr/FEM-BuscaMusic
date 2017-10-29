@@ -25,12 +25,11 @@ public class RepositorioAlbum extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         String consultaSQL = "CREATE TABLE " + tablaAlbum.TABLE_NAME + " ("
-                + tablaAlbum.COL_ID+ " INTEGER PRIMARY KEY AUTOINCREMENT, "
-                + tablaAlbum.COL_NOMBRE  + " TEXT, "
+                + tablaAlbum.COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + tablaAlbum.COL_NOMBRE + " TEXT, "
                 + tablaAlbum.COL_ARTISTA + " TEXT, "
-                + tablaAlbum.COL_IMAGEN     + " TEXT, "
-                + tablaAlbum.COL_TRACKS    + " TEXT, "
-                + tablaAlbum.COL_DURACIONES   + " TEXT)";
+                + tablaAlbum.COL_IMAGEN + " TEXT, "
+                + tablaAlbum.COL_TRACKS + " TEXT)";
         db.execSQL(consultaSQL);
     }
 
@@ -41,7 +40,7 @@ public class RepositorioAlbum extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public long add(String nombre, String artista, String imagen, String tracks, String duraciones ) {
+    public long add(String nombre, String artista, String imagen, String tracks) {
 
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -49,8 +48,7 @@ public class RepositorioAlbum extends SQLiteOpenHelper {
         valores.put(tablaAlbum.COL_NOMBRE, nombre);
         valores.put(tablaAlbum.COL_ARTISTA, artista);
         valores.put(tablaAlbum.COL_IMAGEN, imagen);
-        valores.put(tablaAlbum.COL_TRACKS , tracks);
-        valores.put(tablaAlbum.COL_DURACIONES, duraciones);
+        valores.put(tablaAlbum.COL_TRACKS, tracks);
 
         return db.insert(tablaAlbum.TABLE_NAME, null, valores);
     }
@@ -71,8 +69,7 @@ public class RepositorioAlbum extends SQLiteOpenHelper {
                     cursor.getString(cursor.getColumnIndex(tablaAlbum.COL_NOMBRE)),
                     cursor.getString(cursor.getColumnIndex(tablaAlbum.COL_ARTISTA)),
                     cursor.getString(cursor.getColumnIndex(tablaAlbum.COL_IMAGEN)),
-                    cursor.getString(cursor.getColumnIndex(tablaAlbum.COL_TRACKS)),
-                    cursor.getString(cursor.getColumnIndex(tablaAlbum.COL_DURACIONES))
+                    cursor.getString(cursor.getColumnIndex(tablaAlbum.COL_TRACKS))
             );
         }
 
@@ -96,8 +93,7 @@ public class RepositorioAlbum extends SQLiteOpenHelper {
                         cursor.getString(cursor.getColumnIndex(tablaAlbum.COL_NOMBRE)),
                         cursor.getString(cursor.getColumnIndex(tablaAlbum.COL_ARTISTA)),
                         cursor.getString(cursor.getColumnIndex(tablaAlbum.COL_IMAGEN)),
-                        cursor.getString(cursor.getColumnIndex(tablaAlbum.COL_TRACKS)),
-                        cursor.getString(cursor.getColumnIndex(tablaAlbum.COL_DURACIONES))
+                        cursor.getString(cursor.getColumnIndex(tablaAlbum.COL_TRACKS))
                 );
 
                 listAlbum.add(album);

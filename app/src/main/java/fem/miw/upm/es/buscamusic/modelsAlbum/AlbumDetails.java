@@ -25,15 +25,13 @@ public class AlbumDetails {
     private String artista;
     private String imagen;
     private String listTracks;
-    private String duracionTracks;
 
-    public AlbumDetails(int id, String nombre, String artista, String imagen, String listTracks, String duracionTracks) {
+    public AlbumDetails(int id, String nombre, String artista, String imagen, String listTracks) {
         this.id = id;
         this.nombre = nombre;
         this.artista = artista;
         this.imagen = imagen;
         this.listTracks = listTracks;
-        this.duracionTracks = duracionTracks;
     }
 
     public int getId (){
@@ -70,14 +68,6 @@ public class AlbumDetails {
 
     public void setListTracks(String listTracks) {
         this.listTracks = listTracks;
-    }
-
-    public String getDuracionTracks() {
-        return duracionTracks;
-    }
-
-    public void setDuracionTracks(String duracionTracks) {
-        this.duracionTracks = duracionTracks;
     }
 
     public String getName() {

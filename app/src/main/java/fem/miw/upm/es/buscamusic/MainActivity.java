@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
         buscar_infoArtista = (EditText) findViewById(R.id.edit_buscarinfoArtista);
         mostrar_text = (TextView) findViewById(R.id.txt_mostrarinfo);
         buscar_infoAlbum = (EditText) findViewById(R.id.edit_buscarinfoAlbum);
-        mostrar_img = (ImageView) findViewById(R.id.iv_mostrarimagen);
+        mostrar_img = (ImageView) findViewById(R.id.iv_mostrarImagen);
 
 
         rb_artista = (RadioButton) findViewById(R.id.rb_artista);

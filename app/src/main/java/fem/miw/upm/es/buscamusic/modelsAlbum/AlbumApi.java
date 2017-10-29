@@ -105,10 +105,12 @@ public class AlbumApi {
 
         db_albums = new RepositorioAlbum(context);
 
-        long id = db_albums.add(album.getName(), artist, album.getImage().get(3).getText(), album.getTracks().getTrack().toString(),
-                album.getTracks().getTrack().toString());
+        Log.i(LOG_TAG, "GUARDAR TRACKS" + album.getTracks().guardarNombresTracks());
+
+        long id = db_albums.add(album.getName(), artist, album.getImage().get(3).getText(), album.getTracks().guardarNombresTracks());
 
         Log.i(LOG_TAG, "Album añadido: " + id);
+        Log.i (LOG_TAG, "TRACKS" + album.getTracks().guardarNombresTracks());
 
     }
 

@@ -14,10 +14,6 @@ public class TopTracks {
         return tracks;
     }
 
-    public void setTracks(Tracks tracks) {
-        this.tracks = tracks;
-    }
-
     @Override
     public String toString() {
         return "TopTracks{" +

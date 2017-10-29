@@ -44,6 +44,14 @@ public class Track {
         return nombre;
     }
 
+    public ArtistDetails getArtist() {
+        return artist;
+    }
+
+    public void setArtist(ArtistDetails artist) {
+        this.artist = artist;
+    }
+
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
@@ -88,4 +96,5 @@ public class Track {
                 ", image=" + image +
                 '}';
     }
+
 }

@@ -25,4 +25,12 @@ public class Tracks {
                 "track=" + track +
                 '}';
     }
+
+    public String guardarNombresTracks (){
+        String resultado = "";
+        for (Track t : track){
+            resultado = resultado.concat(t.getName()).concat(";");
+        }
+        return resultado;
+    }
 }

@@ -105,7 +105,7 @@ public class TopTracksApi {
         db_TopTracks = new RepositorioTopTracks(context);
 
         for (Track t: tracks){
-            db_TopTracks.add(t.getName(), t.getImagen(), t.getArtista());
+            db_TopTracks.add(t.getName(), t.getImage().get(3).getText(), t.getArtist().getName());
         }
 
         Log.i(LOG_TAG, "TopTracks añadidos ");
