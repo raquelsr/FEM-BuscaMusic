@@ -29,7 +29,6 @@ public class ArtistDetails {
     private String imagen;
     private String bio_contenido;
     private int puntuacion;
-    private String comentario;
 
     public ArtistDetails(int id, String nombre, String imagen, String bio_contenido, int puntuacion) {
         this.id = id;
@@ -93,14 +92,6 @@ public class ArtistDetails {
 
     public void setPuntuacion(int puntuacion) {
         this.puntuacion = puntuacion;
-    }
-
-    public String getComentario() {
-        return comentario;
-    }
-
-    public void setComentario(String comentario) {
-        this.comentario = comentario;
     }
 
     @Override

@@ -46,11 +46,11 @@ public class TopTracksApi {
 
     }
 
-    public void buscarTopTracks (String limit) {
+    public void buscarTopTracks () {
 
         db_TopTracks = new RepositorioTopTracks(context);
 
-        List<Track> listTracks = db_TopTracks.getAll(limit);
+        List<Track> listTracks = db_TopTracks.getAll();
         if (!listTracks.isEmpty()) {
             Log.i(LOG_TAG, "Esta en BBDD TopTracks");
             tv.setText("Recuperado de BBDD: " + listTracks.size() + listTracks.toString());

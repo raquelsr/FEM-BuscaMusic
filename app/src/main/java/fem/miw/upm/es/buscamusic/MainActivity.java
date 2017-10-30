@@ -83,40 +83,36 @@ public class MainActivity extends AppCompatActivity {
         String album = buscar_infoAlbum.getText().toString();
 
         if (rb_artista.isChecked()) {
-            if (artist.equals("")){
+            if (artist.equals("")) {
                 Toast.makeText(this, "Introduce el nombre del artista", Toast.LENGTH_SHORT).show();
             } else {
-                ArtistApi a = new ArtistApi(this,mostrar_text,mostrar_img);
+                ArtistApi a = new ArtistApi(this, mostrar_text, mostrar_img);
                 a.buscarInfoArtist(artist);
             }
         } else if (rb_album.isChecked()) {
-            if (artist.equals("")){
+            if (artist.equals("")) {
                 Toast.makeText(this, "Introduce el nombre del artista", Toast.LENGTH_SHORT).show();
-            } else  if (album.equals("")){
+            } else if (album.equals("")) {
                 Toast.makeText(this, "Introduce el nombre del album", Toast.LENGTH_SHORT).show();
             } else {
                 AlbumApi a = new AlbumApi(this, mostrar_text, mostrar_img);
-                a.buscarInfoAlbum(artist,album);
+                a.buscarInfoAlbum(artist, album);
             }
         } else if (rb_topTracks.isChecked()) {
-            if (artist.equals("")){
-                Toast.makeText(this, "Introduce numero de tops", Toast.LENGTH_SHORT).show();
-            } else {
-                TopTracksApi a = new TopTracksApi(this, mostrar_text);
-                a.buscarTopTracks(artist);
-            }
+            TopTracksApi a = new TopTracksApi(this, mostrar_text);
+            a.buscarTopTracks();
         }
     }
 
-    public void modificarEdits(View v){
-        if (rb_album.isChecked()){
+    public void modificarEdits(View v) {
+        if (rb_album.isChecked()) {
             buscar_infoAlbum.setVisibility(View.VISIBLE);
         } else if (rb_artista.isChecked()) {
             buscar_infoAlbum.setVisibility(View.INVISIBLE);
             buscar_infoArtista.setHint("Introduce nombre del artista");
         } else {
             buscar_infoAlbum.setVisibility(View.INVISIBLE);
-            buscar_infoArtista.setHint("Introduce numero de tops exitos para buscar");
+            buscar_infoArtista.setVisibility(View.INVISIBLE);
         }
     }
 }

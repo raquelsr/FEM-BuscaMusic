@@ -25,7 +25,7 @@ public class TopTracksProvider extends ContentProvider {
 
     static {
         uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
-        uriMatcher.addURI(AUTHORITY, ENTRY + "/*", ID_URI_TOP_TRACKS);
+        uriMatcher.addURI(AUTHORITY, ENTRY, ID_URI_TOP_TRACKS);
     }
 
     @Override
@@ -37,23 +37,16 @@ public class TopTracksProvider extends ContentProvider {
     @Override
     public Cursor query(final Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
 
-        Log.i("MiW", "HA ENTRADO EN LA QUERY");
         Log.i ("MiW", uri.getLastPathSegment());
         SQLiteDatabase db_query = db_topTracks.getReadableDatabase();
-        String where = tablaTopTracks.COL_ID + " <= ?";
-        selectionArgs = new String[1];
-        selectionArgs[0] = uri.getLastPathSegment();
 
         Cursor c = db_query.query(tablaTopTracks.TABLE_NAME,
                 projection,
-                where,
-                selectionArgs,null,null,
+                selection,
+                null,null,null,
                 sortOrder);
 
         if (c.getCount() == 0){
-            Log.i("MiW", "Probando");
-            Log.i("MiW", "Por aqui");
-
             Thread buscar = new Thread(new Runnable() {
                 @Override
                 public void run() {
@@ -63,11 +56,7 @@ public class TopTracksProvider extends ContentProvider {
             });
             buscar.start();
 
-            c = db_query.query(tablaTopTracks.TABLE_NAME,
-                    projection,
-                    where,
-                    selectionArgs,null,null,
-                    sortOrder);
+            this.query(uri,projection,selection,selectionArgs,sortOrder);
         }
 
         return c;

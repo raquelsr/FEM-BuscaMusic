@@ -77,9 +77,8 @@ public class Track {
     @Override
     public String toString() {
         return "Track{" +
-                "name='" + name + '\'' +
-                ", artist=" + artist +
-                ", image=" + image +
+                "nombre='" + nombre + '\'' +
+                ", artist=" + artista +
                 '}';
     }
 

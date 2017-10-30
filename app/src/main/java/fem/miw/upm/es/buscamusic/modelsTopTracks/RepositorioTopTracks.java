@@ -51,8 +51,8 @@ public class RepositorioTopTracks extends SQLiteOpenHelper {
         return db.insert(tablaTopTracks.TABLE_NAME, null, valores);
     }
 
-    public ArrayList<Track> getAll(String numero) {
-        String consultaSQL = "SELECT * FROM " + tablaTopTracks.TABLE_NAME + " LIMIT " + numero ;
+    public ArrayList<Track> getAll() {
+        String consultaSQL = "SELECT * FROM " + tablaTopTracks.TABLE_NAME;
         ArrayList<Track> listTracks = new ArrayList<>();
 
         SQLiteDatabase db = this.getReadableDatabase();
