@@ -10,6 +10,7 @@ import android.widget.Toast;
 import com.squareup.picasso.Picasso;
 
 import fem.miw.upm.es.buscamusic.LastFMAPIService;
+import fem.miw.upm.es.buscamusic.R;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -35,7 +36,7 @@ public class AlbumApi {
     private TextView tv;
     private ImageView iv;
 
-    public AlbumApi(Context context, TextView tv, ImageView iv){
+    public AlbumApi(Context context, TextView tv, ImageView iv) {
         this.context = context;
         this.tv = tv;
         this.iv = iv;
@@ -55,9 +56,12 @@ public class AlbumApi {
 
         AlbumDetails albumAux = db_albums.get(artist, album);
         if (albumAux != null) {
-            if (tv!=null){
+            if (tv != null && iv != null) {
                 Log.i(LOG_TAG, "El album ya esta en BBDD albums");
-                tv.setText("YA ESTA EN BBDD " + albumAux.getNombre() + albumAux.getImagen());
+                tv.setText("Recuperado de BBDD: " + albumAux.getNombre() + "\n" + albumAux.getTracks());
+                Picasso.with(context)
+                        .load(albumAux.getImagen())
+                        .into(iv);
             }
         } else {
             infoAlbumAPI(artist, album);
@@ -75,18 +79,27 @@ public class AlbumApi {
 
                 Album respuestaAlbum = response.body();
                 if (respuestaAlbum != null) {
-                    if (tv!=null && iv!=null){
-                        tv.setText(respuestaAlbum.getAlbum().toString() + "\n");
-                        Picasso.with(context).
-                                load(respuestaAlbum.getAlbum().getImage().get(3).getText())
-                                .into(iv);
+                    if (respuestaAlbum.getAlbum() != null) {
+                        if (tv != null && iv != null) {
+                            tv.setText("Buscado en servidor:" + respuestaAlbum.getAlbum().getName() + "\n"
+                                    + respuestaAlbum.getAlbum().getTracks());
+                            if (!respuestaAlbum.getAlbum().getImage().get(3).getText().equals("")) {
+                                Picasso.with(context).
+                                        load(respuestaAlbum.getAlbum().getImage().get(3).getText())
+                                        .into(iv);
+                            }
+                        }
+                        addAlbumToBBDD(respuestaAlbum.getAlbum(), artist);
+                        Log.i(LOG_TAG, "Respuesta album: " + respuestaAlbum.toString());
+                    } else {
+                        if (tv != null) {
+                            tv.setText("No hay información");
+                            iv.setImageResource(R.drawable.ic_busca_music_web);
+                            Log.i(LOG_TAG, "No hay información del album");
+                        }
                     }
-
-                    addAlbumToBBDD(respuestaAlbum.getAlbum(), artist);
-                    Log.i(LOG_TAG, "Respuesta album: " + respuestaAlbum.toString());
-
                 } else {
-                    if (tv!=null){
+                    if (tv != null) {
                         tv.setText("No hay album");
                     }
                     Log.i(LOG_TAG, "No se ha recuperado el album");

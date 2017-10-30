@@ -52,8 +52,8 @@ public class TopTracksApi {
 
         List<Track> listTracks = db_TopTracks.getAll(limit);
         if (!listTracks.isEmpty()) {
-            Log.i(LOG_TAG, "El album ya esta en BBDD TopTracks");
-            tv.setText("YA ESTA EN BBDD" + listTracks.size() + listTracks.toString());
+            Log.i(LOG_TAG, "Esta en BBDD TopTracks");
+            tv.setText("Recuperado de BBDD: " + listTracks.size() + listTracks.toString());
         } else {
             infoTopTrackAPI();
         }

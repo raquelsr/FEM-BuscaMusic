@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import fem.miw.upm.es.buscamusic.modelsAlbum.AlbumApi;
 import fem.miw.upm.es.buscamusic.modelsArtist.ArtistApi;
@@ -42,21 +43,16 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        buscar_infoArtista = (EditText) findViewById(R.id.edit_buscarinfoArtista);
+        buscar_infoArtista = (EditText) findViewById(R.id.edit_buscarinfo1);
         mostrar_text = (TextView) findViewById(R.id.txt_mostrarinfo);
         buscar_infoAlbum = (EditText) findViewById(R.id.edit_buscarinfoAlbum);
         mostrar_img = (ImageView) findViewById(R.id.iv_mostrarImagen);
 
+        buscar_infoAlbum.setVisibility(View.INVISIBLE);
 
         rb_artista = (RadioButton) findViewById(R.id.rb_artista);
         rb_album = (RadioButton) findViewById(R.id.rb_album);
         rb_topTracks = (RadioButton) findViewById(R.id.rb_toptracks);
-
-        if (rb_artista.isChecked()) {
-            buscar_infoAlbum.setVisibility(View.INVISIBLE);
-        } else if (rb_album.isChecked()) {
-            buscar_infoAlbum.setVisibility(View.VISIBLE);
-        }
     }
 
     @Override
@@ -87,14 +83,40 @@ public class MainActivity extends AppCompatActivity {
         String album = buscar_infoAlbum.getText().toString();
 
         if (rb_artista.isChecked()) {
-            ArtistApi a = new ArtistApi(this,mostrar_text,mostrar_img);
-            a.buscarInfoArtist(artist);
+            if (artist.equals("")){
+                Toast.makeText(this, "Introduce el nombre del artista", Toast.LENGTH_SHORT).show();
+            } else {
+                ArtistApi a = new ArtistApi(this,mostrar_text,mostrar_img);
+                a.buscarInfoArtist(artist);
+            }
         } else if (rb_album.isChecked()) {
-            AlbumApi a = new AlbumApi(this, mostrar_text, mostrar_img);
-            a.buscarInfoAlbum(artist,album);
+            if (artist.equals("")){
+                Toast.makeText(this, "Introduce el nombre del artista", Toast.LENGTH_SHORT).show();
+            } else  if (album.equals("")){
+                Toast.makeText(this, "Introduce el nombre del album", Toast.LENGTH_SHORT).show();
+            } else {
+                AlbumApi a = new AlbumApi(this, mostrar_text, mostrar_img);
+                a.buscarInfoAlbum(artist,album);
+            }
         } else if (rb_topTracks.isChecked()) {
-            TopTracksApi a = new TopTracksApi(this, mostrar_text);
-            a.buscarTopTracks(artist);
+            if (artist.equals("")){
+                Toast.makeText(this, "Introduce numero de tops", Toast.LENGTH_SHORT).show();
+            } else {
+                TopTracksApi a = new TopTracksApi(this, mostrar_text);
+                a.buscarTopTracks(artist);
+            }
+        }
+    }
+
+    public void modificarEdits(View v){
+        if (rb_album.isChecked()){
+            buscar_infoAlbum.setVisibility(View.VISIBLE);
+        } else if (rb_artista.isChecked()) {
+            buscar_infoAlbum.setVisibility(View.INVISIBLE);
+            buscar_infoArtista.setHint("Introduce nombre del artista");
+        } else {
+            buscar_infoAlbum.setVisibility(View.INVISIBLE);
+            buscar_infoArtista.setHint("Introduce numero de tops exitos para buscar");
         }
     }
 }

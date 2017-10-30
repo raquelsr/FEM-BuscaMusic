@@ -10,6 +10,7 @@ import android.widget.Toast;
 import com.squareup.picasso.Picasso;
 
 import fem.miw.upm.es.buscamusic.LastFMAPIService;
+import fem.miw.upm.es.buscamusic.R;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -55,9 +56,12 @@ public class ArtistApi {
 
         ArtistDetails artistAux = db_artist.get(artist);
         if (artistAux != null) {
-            if (tv != null) {
+            if (tv != null && iv != null) {
                 Log.i(LOG_TAG, "El album ya esta en BBDD artistas");
-                tv.setText("YA ESTA EN BBDD" + artistAux.getNombre() + artistAux.getImagen());
+                tv.setText("Recuperado de BBDD : " + artistAux.getNombre() + "\n" + artistAux.getBio_contenido());
+                Picasso.with(context)
+                        .load(artistAux.getImagen())
+                        .into(iv);
             }
         } else {
             infoArtistAPI(artist);
@@ -73,15 +77,25 @@ public class ArtistApi {
                 Log.i(LOG_TAG, "RESPONSE: " + response.toString());
                 Artist respuestaArtista = response.body();
                 if (respuestaArtista != null) {
-                    if (tv != null && iv != null) {
-                        tv.setText(respuestaArtista.getArtist().toString() + "\n");
-                        Picasso.with(context).
-                                load(respuestaArtista.getArtist().getImage().get(3).getText())
-                                .into(iv);
+                    if (respuestaArtista.getArtist() != null) {
+                        addArtistToBBDD(respuestaArtista.getArtist());
+                        if (tv != null && iv != null) {
+                            if (respuestaArtista.getArtist().toString() != null) {
+                                tv.setText("Buscado en servidor: " + "\n" + respuestaArtista.getArtist().toString());
+                            }
+                            if (!respuestaArtista.getArtist().getImage().get(3).getText().equals("")) {
+                                Picasso.with(context).
+                                        load(respuestaArtista.getArtist().getImage().get(3).getText())
+                                        .into(iv);
+                            }
+                        }
+                    } else {
+                        if (tv != null) {
+                            tv.setText("No hay información");
+                            iv.setImageResource(R.drawable.ic_busca_music_web);
+                            Log.i(LOG_TAG, "No hay información del artista");
+                        }
                     }
-
-                    addArtistToBBDD(respuestaArtista.getArtist());
-                    Log.i(LOG_TAG, "Respuesta artista: " + respuestaArtista.toString());
 
                 } else {
                     if (tv != null) {

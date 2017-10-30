@@ -9,9 +9,20 @@
     tools:context="fem.miw.upm.es.buscamusic.MainActivity"
     tools:showIn="@layout/activity_main">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/background_dark"
+        android:textSize="18dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="5dp"
+        android:text="Buscar:"/>
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_gravity="center"
         android:orientation="horizontal">
 
         <RadioGroup
@@ -23,25 +34,24 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Artista"
+                android:layout_marginRight="10dp"
+                android:onClick="modificarEdits"
                 android:id="@+id/rb_artista"/>
 
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Album"
+                android:onClick="modificarEdits"
+                android:layout_marginRight="10dp"
                 android:id="@+id/rb_album"/>
 
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Top Tracks"
+                android:onClick="modificarEdits"
                 android:id="@+id/rb_toptracks"/>
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Tag"
-                android:id="@+id/rb_tags"/>
         </RadioGroup>
     </LinearLayout>
 
@@ -49,13 +59,15 @@
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/edit_buscarinfoArtista"
-        android:hint="Introduce nombre del artista" />
+        android:id="@+id/edit_buscarinfo1"
+        android:layout_marginLeft="10dp"
+        android:hint="Información a buscar" />
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/edit_buscarinfoAlbum"
+        android:layout_marginLeft="10dp"
         android:hint="Introduce nombre del album" />
 
 
@@ -73,9 +85,11 @@
                 android:id="@+id/txt_mostrarinfo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Hello World!"
+                android:text="Información encontrada"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
+                android:layout_marginLeft="10dp"
+                android:textColor="@android:color/background_dark"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -83,6 +97,7 @@
                 android:id="@+id/iv_mostrarImagen"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 app:srcCompat="@drawable/ic_busca_music_web" />
 
         </LinearLayout>
