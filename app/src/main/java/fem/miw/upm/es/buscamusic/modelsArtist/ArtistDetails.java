@@ -1,10 +1,6 @@
 
 package fem.miw.upm.es.buscamusic.modelsArtist;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
-import java.util.ArrayList;
 import java.util.List;
 
 import com.google.gson.annotations.Expose;
@@ -30,7 +26,7 @@ public class ArtistDetails {
     private String bio_contenido;
     private int puntuacion;
 
-    public ArtistDetails(int id, String nombre, String imagen, String bio_contenido, int puntuacion) {
+    ArtistDetails(int id, String nombre, String imagen, String bio_contenido, int puntuacion) {
         this.id = id;
         this.nombre = nombre;
         this.imagen = imagen;
@@ -46,11 +42,11 @@ public class ArtistDetails {
         this.name = name;
     }
 
-    public List<Image> getImage() {
+    List<Image> getImage() {
         return image;
     }
 
-    public BioArtist getBioArtist() {
+    BioArtist getBioArtist() {
         return bioArtist;
     }
 
@@ -78,7 +74,7 @@ public class ArtistDetails {
         this.imagen = imagen;
     }
 
-    public String getBio_contenido() {
+    String getBio_contenido() {
         return bio_contenido;
     }
 

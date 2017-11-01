@@ -1,9 +1,6 @@
 
 package fem.miw.upm.es.buscamusic.modelsArtist;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -13,7 +10,7 @@ public class Artist {
     @Expose
     private ArtistDetails artist;
 
-    public ArtistDetails getArtist() {
+    ArtistDetails getArtist() {
         return artist;
     }
 

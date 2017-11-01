@@ -2,13 +2,13 @@ package fem.miw.upm.es.buscamusic.modelsTopTracks;
 
 import android.content.Context;
 import android.util.Log;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.List;
 
 import fem.miw.upm.es.buscamusic.LastFMAPIService;
+import fem.miw.upm.es.buscamusic.R;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -50,13 +50,13 @@ public class TopTracksApi {
 
         db_TopTracks = new RepositorioTopTracks(context);
 
-        db_TopTracks.delete();
+        db_TopTracks.deleteTable();
 
         infoTopTrackAPI();
 
     }
 
-    public void infoTopTrackAPI() {
+    void infoTopTrackAPI() {
 
         Call<TopTracks> call_async = lastfmApiService.getTopTracks(METODO_TOPTRACKS, API_KEY, API_FORMAT, API_LENGUAJE);
 
@@ -71,7 +71,7 @@ public class TopTracksApi {
                     addTracksToBBDD(respuestaTopTracks.getTracks().getTrack());
                     Log.i(LOG_TAG, "Respuesta TRACKS: " + respuestaTopTracks.toString());
                 } else {
-                    tv.setText("No hay tracks");
+                    tv.setText(context.getResources().getString(R.string.noInformacion));
                     Log.i(LOG_TAG, "No se ha recuperado el tracks");
                 }
             }

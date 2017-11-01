@@ -8,7 +8,7 @@ import com.google.gson.annotations.SerializedName;
 import fem.miw.upm.es.buscamusic.Image;
 import fem.miw.upm.es.buscamusic.modelsTopTracks.Tracks;
 
-public class AlbumDetails {
+class AlbumDetails {
 
     @SerializedName("name")
     @Expose
@@ -27,7 +27,7 @@ public class AlbumDetails {
     private String listTracks;
     private String comentarios;
 
-    public AlbumDetails(int id, String nombre, String artista, String imagen, String listTracks, String comentarios) {
+    AlbumDetails(int id, String nombre, String artista, String imagen, String listTracks, String comentarios) {
         this.id = id;
         this.nombre = nombre;
         this.artista = artista;
@@ -89,7 +89,7 @@ public class AlbumDetails {
         return "AlbumDetails{" +
                 "name='" + name + '\'' +
                 ", image=" + image +
-                ", tracks=" + tracks +
+                ", tracks=" + tracks.guardarNombresTracks() +
                 '}';
     }
 }

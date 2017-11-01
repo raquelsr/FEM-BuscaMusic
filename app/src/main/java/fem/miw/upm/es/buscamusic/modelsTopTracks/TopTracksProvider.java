@@ -16,7 +16,6 @@ public class TopTracksProvider extends ContentProvider {
     private static final String ENTRY = "topTracks";
 
     private static final String uri = "content://" + AUTHORITY + "/" + ENTRY;
-    public static final Uri CONTENT_URI = Uri.parse(uri);
 
     RepositorioTopTracks db_topTracks;
 

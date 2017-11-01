@@ -69,9 +69,9 @@ public class MainActivity extends AppCompatActivity {
             }
         } else if (rb_album.isChecked()) {
             if (artist.equals("")) {
-                Toast.makeText(this, "Introduce el nombre del artista", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.introduceartista, Toast.LENGTH_SHORT).show();
             } else if (album.equals("")) {
-                Toast.makeText(this, "Introduce el nombre del album", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.introducealbum, Toast.LENGTH_SHORT).show();
             } else {
                 AlbumApi a = new AlbumApi(this, mostrar_text, mostrar_img);
                 a.buscarInfoAlbum(artist, album);
@@ -85,9 +85,11 @@ public class MainActivity extends AppCompatActivity {
     public void modificarEdits(View v) {
         if (rb_album.isChecked()) {
             buscar_infoAlbum.setVisibility(View.VISIBLE);
+            buscar_infoArtista.setVisibility(View.VISIBLE);
         } else if (rb_artista.isChecked()) {
             buscar_infoAlbum.setVisibility(View.INVISIBLE);
-            buscar_infoArtista.setHint("Introduce nombre del artista");
+            buscar_infoArtista.setVisibility(View.VISIBLE);
+            buscar_infoArtista.setHint(getResources().getString(R.string.introduceartista));
         } else {
             buscar_infoAlbum.setVisibility(View.INVISIBLE);
             buscar_infoArtista.setVisibility(View.INVISIBLE);

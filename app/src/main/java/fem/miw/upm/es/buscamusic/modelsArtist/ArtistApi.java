@@ -58,7 +58,7 @@ public class ArtistApi {
         if (artistAux != null) {
             if (tv != null && iv != null) {
                 Log.i(LOG_TAG, "El album ya esta en BBDD artistas");
-                tv.setText("Recuperado de BBDD : " + artistAux.getNombre() + "\n" + artistAux.getBio_contenido());
+                tv.setText(context.getResources().getString(R.string.recuperadodeBBDD) + artistAux.getNombre() + "\n" + artistAux.getBio_contenido());
                 Picasso.with(context)
                         .load(artistAux.getImagen())
                         .into(iv);
@@ -81,7 +81,7 @@ public class ArtistApi {
                         addArtistToBBDD(respuestaArtista.getArtist());
                         if (tv != null && iv != null) {
                             if (respuestaArtista.getArtist().toString() != null) {
-                                tv.setText("Buscado en servidor: " + "\n" + respuestaArtista.getArtist().toString());
+                                tv.setText(context.getResources().getString(R.string.buscaEnServidor) + "\n" + respuestaArtista.getArtist().toString());
                             }
                             if (!respuestaArtista.getArtist().getImage().get(3).getText().equals("")) {
                                 Picasso.with(context).
@@ -91,7 +91,7 @@ public class ArtistApi {
                         }
                     } else {
                         if (tv != null) {
-                            tv.setText("No hay información");
+                            tv.setText(context.getResources().getString(R.string.noInformacion));
                             iv.setImageResource(R.drawable.ic_busca_music_web);
                             Log.i(LOG_TAG, "No hay información del artista");
                         }
@@ -99,7 +99,7 @@ public class ArtistApi {
 
                 } else {
                     if (tv != null) {
-                        tv.setText("No hay artista");
+                        tv.setText(context.getResources().getString(R.string.noInformacion));
                     }
 
                     Log.i(LOG_TAG, "No se ha recuperado el artista");

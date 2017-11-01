@@ -16,7 +16,6 @@ public class AlbumProvider extends ContentProvider {
     private static final String ENTRY = "albums";
 
     private static final String uri = "content://" + AUTHORITY + "/" + ENTRY;
-    public static final Uri CONTENT_URI = Uri.parse(uri);
 
     RepositorioAlbum db_album;
 

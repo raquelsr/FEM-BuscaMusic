@@ -6,8 +6,6 @@ import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
-import android.util.Log;
-
 
 import static fem.miw.upm.es.buscamusic.modelsArtist.ArtistContract.tablaArtista;
 
@@ -17,7 +15,6 @@ public class ArtistProvider extends ContentProvider {
     private static final String ENTRY = "artistas";
 
     private static final String uri = "content://" + AUTHORITY + "/" + ENTRY;
-    public static final Uri CONTENT_URI = Uri.parse(uri);
 
     RepositorioArtist db_artist;
 

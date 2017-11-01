@@ -58,7 +58,7 @@ public class AlbumApi {
         if (albumAux != null) {
             if (tv != null && iv != null) {
                 Log.i(LOG_TAG, "El album ya esta en BBDD albums");
-                tv.setText("Recuperado de BBDD: " + albumAux.getNombre() + "\n" + albumAux.getTracks());
+                tv.setText(context.getResources().getString(R.string.recuperadodeBBDD)+ albumAux.getNombre() + "\n" + albumAux.getTracks());
                 Picasso.with(context)
                         .load(albumAux.getImagen())
                         .into(iv);
@@ -81,7 +81,7 @@ public class AlbumApi {
                 if (respuestaAlbum != null) {
                     if (respuestaAlbum.getAlbum() != null) {
                         if (tv != null && iv != null) {
-                            tv.setText("Buscado en servidor:" + respuestaAlbum.getAlbum().getName() + "\n"
+                            tv.setText(context.getResources().getString(R.string.buscaEnServidor )+ respuestaAlbum.getAlbum().getName() + "\n"
                                     + respuestaAlbum.getAlbum().getTracks());
                             if (!respuestaAlbum.getAlbum().getImage().get(3).getText().equals("")) {
                                 Picasso.with(context).
@@ -93,14 +93,14 @@ public class AlbumApi {
                         Log.i(LOG_TAG, "Respuesta album: " + respuestaAlbum.toString());
                     } else {
                         if (tv != null) {
-                            tv.setText("No hay información");
+                            tv.setText(context.getResources().getString(R.string.noInformacion));
                             iv.setImageResource(R.drawable.ic_busca_music_web);
                             Log.i(LOG_TAG, "No hay información del album");
                         }
                     }
                 } else {
                     if (tv != null) {
-                        tv.setText("No hay album");
+                        tv.setText(context.getResources().getString(R.string.noInformacion));
                     }
                     Log.i(LOG_TAG, "No se ha recuperado el album");
                 }

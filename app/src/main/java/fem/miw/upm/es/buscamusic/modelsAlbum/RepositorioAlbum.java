@@ -6,8 +6,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import java.util.ArrayList;
-
 import static fem.miw.upm.es.buscamusic.modelsAlbum.AlbumContract.tablaAlbum;
 
 class RepositorioAlbum extends SQLiteOpenHelper {
@@ -76,34 +74,5 @@ class RepositorioAlbum extends SQLiteOpenHelper {
         db.close();
 
         return album;
-    }
-
-    public ArrayList<AlbumDetails> getAll() {
-        String consultaSQL = "SELECT * FROM " + tablaAlbum.TABLE_NAME;
-        ArrayList<AlbumDetails> listAlbum = new ArrayList<>();
-
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery(consultaSQL, null);
-
-        if (cursor.moveToFirst()) {
-            while (!cursor.isAfterLast()) {
-                AlbumDetails album = new AlbumDetails(
-                        cursor.getInt(cursor.getColumnIndex(tablaAlbum.COL_ID)),
-                        cursor.getString(cursor.getColumnIndex(tablaAlbum.COL_NOMBRE)),
-                        cursor.getString(cursor.getColumnIndex(tablaAlbum.COL_ARTISTA)),
-                        cursor.getString(cursor.getColumnIndex(tablaAlbum.COL_IMAGEN)),
-                        cursor.getString(cursor.getColumnIndex(tablaAlbum.COL_TRACKS)),
-                        cursor.getString(cursor.getColumnIndex(tablaAlbum.COL_COMENTARIOS))
-                );
-
-                listAlbum.add(album);
-                cursor.moveToNext();
-            }
-        }
-
-        cursor.close();
-        db.close();
-
-        return listAlbum;
     }
 }

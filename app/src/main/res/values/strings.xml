@@ -2,4 +2,18 @@
     <string name="app_name">BuscaMusic</string>
 
     <string name="introduceartista">Introduce el nombre del artista</string>
+    <string name="introducealbum">Introduce el nombre del album</string>
+
+    <string name="recuperadodeBBDD">Recuperado de BBDD: </string>
+    <string name="buscaEnServidor">Buscado en servidor: </string>
+    <string name="noInformacion">No hay información</string>
+    <string name="album">Album</string>
+    <string name="artista">Artista</string>
+    <string name="buscar">Buscar:</string>
+    <string name="informaci_n_a_buscar">Información a buscar</string>
+    <string name="introduce_nombre_del_album">Introduce nombre del album</string>
+    <string name="top_tracks">Top Tracks</string>
+    <string name="imagen">imagen</string>
+
+
 </resources>
