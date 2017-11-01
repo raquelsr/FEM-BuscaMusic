@@ -39,10 +39,11 @@ public class TopTracksProvider extends ContentProvider {
         Log.i("MiW", "Uri" + uri.getLastPathSegment());
         SQLiteDatabase db_query = db_topTracks.getReadableDatabase();
 
+        String where = tablaTopTracks.COL_ID + " <= 50";
 
         Cursor c = db_query.query(tablaTopTracks.TABLE_NAME,
                 projection,
-                selection,
+                where,
                 null,null,null,
                 sortOrder);
 
@@ -56,7 +57,11 @@ public class TopTracksProvider extends ContentProvider {
             });
             buscar.start();
 
-            this.query(uri,projection,selection,selectionArgs,sortOrder);
+            c = db_query.query(tablaTopTracks.TABLE_NAME,
+                    projection,
+                    selection,
+                    null,null,null,
+                    sortOrder);
         }
 
         return c;
