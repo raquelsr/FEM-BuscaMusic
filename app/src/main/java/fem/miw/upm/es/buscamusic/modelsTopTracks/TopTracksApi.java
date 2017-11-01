@@ -50,13 +50,9 @@ public class TopTracksApi {
 
         db_TopTracks = new RepositorioTopTracks(context);
 
-        List<Track> listTracks = db_TopTracks.getAll();
-        if (!listTracks.isEmpty()) {
-            Log.i(LOG_TAG, "Esta en BBDD TopTracks");
-            tv.setText("Recuperado de BBDD: " + listTracks.size() + listTracks.toString());
-        } else {
-            infoTopTrackAPI();
-        }
+        db_TopTracks.delete();
+
+        infoTopTrackAPI();
 
     }
 
@@ -70,7 +66,7 @@ public class TopTracksApi {
                 TopTracks respuestaTopTracks = response.body();
                 if (respuestaTopTracks != null) {
                     if (tv!=null){
-                        tv.setText(respuestaTopTracks.toString() + "\n");
+                        tv.setText(respuestaTopTracks.getTracks().guardarNombresTracks() + "\n");
                     }
                     addTracksToBBDD(respuestaTopTracks.getTracks().getTrack());
                     Log.i(LOG_TAG, "Respuesta TRACKS: " + respuestaTopTracks.toString());

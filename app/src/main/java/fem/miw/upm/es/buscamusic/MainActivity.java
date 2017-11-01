@@ -5,8 +5,6 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
@@ -55,36 +53,16 @@ public class MainActivity extends AppCompatActivity {
         rb_topTracks = (RadioButton) findViewById(R.id.rb_toptracks);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
     public void buscarInformacionAPI() {
 
         String artist = buscar_infoArtista.getText().toString();
         String album = buscar_infoAlbum.getText().toString();
 
+        mostrar_text.setText("");
+
         if (rb_artista.isChecked()) {
             if (artist.equals("")) {
-                Toast.makeText(this, "Introduce el nombre del artista", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.introduceartista, Toast.LENGTH_SHORT).show();
             } else {
                 ArtistApi a = new ArtistApi(this, mostrar_text, mostrar_img);
                 a.buscarInfoArtist(artist);

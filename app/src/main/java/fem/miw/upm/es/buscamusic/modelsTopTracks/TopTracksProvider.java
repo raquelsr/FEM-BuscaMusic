@@ -37,8 +37,9 @@ public class TopTracksProvider extends ContentProvider {
     @Override
     public Cursor query(final Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
 
-        Log.i ("MiW", uri.getLastPathSegment());
+        Log.i("MiW", "Uri" + uri.getLastPathSegment());
         SQLiteDatabase db_query = db_topTracks.getReadableDatabase();
+
 
         Cursor c = db_query.query(tablaTopTracks.TABLE_NAME,
                 projection,
@@ -64,7 +65,7 @@ public class TopTracksProvider extends ContentProvider {
 
     @Override
     public String getType(Uri uri) {
-        switch (uriMatcher.match(uri)){
+        switch (uriMatcher.match(uri)) {
             case ID_URI_TOP_TRACKS:
                 return "vnd.android.cursor.dir/vnd.miw.toptracks";
             default:

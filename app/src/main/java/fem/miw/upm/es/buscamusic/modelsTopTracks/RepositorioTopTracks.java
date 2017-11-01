@@ -77,4 +77,11 @@ public class RepositorioTopTracks extends SQLiteOpenHelper {
 
         return listTracks;
     }
+
+    public void delete (){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String consultaSQL = "DROP TABLE IF EXISTS " + tablaTopTracks.TABLE_NAME;
+        db.execSQL(consultaSQL);
+        onCreate(db);
+    }
 }
